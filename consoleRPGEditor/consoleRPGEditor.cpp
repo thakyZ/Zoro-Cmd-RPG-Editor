@@ -442,6 +442,222 @@ char *displayArmorName(int tmpArmor, int tmpCharClass)
 	return "";
 }
 
+void debugSave(saveFileData tmpSaveFile)
+{
+	cout << "+=================================+\n";
+	cout << "   Debug -> STARTING\n";
+	cout << "+=================================+\n";
+	cout << "Player Save Data: " << ((char *)&tmpSaveFile) << "\n";
+	cout << "Player Save Size: " << (sizeof(tmpSaveFile)) << "\n";
+	cout << "+=================================+\n";
+	cout << "   Save Class Debug\n";
+	cout << "+=================================+\n";
+
+	cout << "Stats:\n";
+	cout << "   Strength:      " << tmpSaveFile.strength << "\n";
+	cout << "   Faith:         " << tmpSaveFile.faith << "\n";
+	cout << "   Dexterity:     " << tmpSaveFile.dexterity << "\n";
+	cout << "   Insperation:   " << tmpSaveFile.insperation << "\n";
+	cout << "   Cleverness:    " << tmpSaveFile.cleverness << "\n";
+	cout << "   Focus:         " << tmpSaveFile.focus << "\n";
+	cout << "Copper:           " << tmpSaveFile.copper << "\n";
+
+	switch (tmpSaveFile.charClass)
+	{
+		case FIGHTER:
+			cout << "Class:            Fighter\n";
+			break;
+		case CLERIC:
+			cout << "Class:            Cleric\n";
+			break;
+		case ROUGE:
+			cout << "Class:            Rouge\n";
+			break;
+		case BARD:
+			cout << "Class:            Bard\n";
+			break;
+		case THEIF:
+			cout << "Class:            Theif\n";
+			break;
+		case TINKER:
+			cout << "Class:            Tinker\n";
+			break;
+		case MAGE:
+			cout << "Class:            Mage\n";
+			break;
+		default:
+			cout << "Class:            BROKEN\n";
+			break;
+	}
+
+	switch (tmpSaveFile.charRace)
+	{
+		case HUMAN:
+			cout << "Race:             Human\n";
+			break;
+		case ELF:
+			cout << "Race:             Elf\n";
+			break;
+		case DARKELF:
+			cout << "Race:             Dark Elf\n";
+			break;
+		case ANGEL:
+			cout << "Race:             Angel\n";
+			break;
+		case MONGREL:
+			cout << "Race:             Mongrel\n";
+			break;
+		case SHAMANI:
+			cout << "Race:             Shamani\n";
+			break;
+		case NIBELUNG:
+			cout << "Race:             Nibelung\n";
+			break;
+		case UNDEAD:
+			cout << "Race:             Undead\n";
+			break;
+		default:
+			cout << "Race:             BROKEN\n";
+			break;
+	}
+
+	cout << "Hitpoints:        " << tmpSaveFile.hp << "\n";
+	cout << "Max Hitpoints:    " << tmpSaveFile.hpMax << "\n";
+	cout << "Mana:             " << tmpSaveFile.mp << "\n";
+	cout << "Max Mana:         " << tmpSaveFile.mpMax << "\n";
+
+	switch (tmpSaveFile.location)
+	{
+		case QUIT:
+			cout << "Location:         Quit\n";
+			break;
+		case VIEWSTATS:
+			cout << "Location:         View Stats\n";
+			break;
+		case TOWN:
+			cout << "Location:         Town\n";
+			break;
+		case FOREST:
+			cout << "Location:         Forest\n";
+			break;
+		case MONSTER:
+			cout << "Location:         Monster\n";
+			break;
+		case SAVE:
+			cout << "Location:         Save\n";
+			break;
+		case ARMORSMITH:
+			cout << "Location:         Armor Smith\n";
+			break;
+		case BUYARMOR:
+			cout << "Location:         Buy Armor\n";
+			break;
+		case SELLARMOR:
+			cout << "Location:         Sell Armor\n";
+			break;
+		case TAVERN:
+			cout << "Location:         Tavern\n";
+			break;
+		case WEAPONSMITH:
+			cout << "Location:         Weapon Smith\n";
+			break;
+		case CHAPEL:
+			cout << "Location:         Chapel\n";
+			break;
+		case BANK:
+			cout << "Location:         Bank\n";
+			break;
+		case ALCHIMEST:
+			cout << "Location:         Alchimest\n";
+			break;
+		default:
+			cout << "Location:         BROKEN\n";
+	}
+
+	switch (tmpSaveFile.weapon)
+	{
+		case FISTS:
+			cout << "Weapon:           Fists\n";
+			break;
+		case DAGGER:
+			cout << "Weapon:           Dagger\n";
+			break;
+		case SWORD:
+			cout << "Weapon:           Sword\n";
+			break;
+		case STAFF:
+			cout << "Weapon:           Staff\n";
+			break;
+		case ANCIENTBLADE:
+			cout << "Weapon:           Ancient Blade\n";
+			break;
+		case MAGICBLADE:
+			cout << "Weapon:           Magic blade\n";
+			break;
+		case ARCHANEBLADE:
+			cout << "Weapon:           Archane blade\n";
+			break;
+		case VOIDEXCALIBUR:
+			cout << "Weapon:           Void Excalibur\n";
+			break;
+		default:
+			cout << "Weapon:           Broken\n";
+	}
+
+	cout << "Weapon set name:  " << displayWeaponName(tmpSaveFile.weapon, tmpSaveFile.charClass) << "\n";
+
+	switch (tmpSaveFile.armor)
+	{
+		case LOINCLOTH:
+			cout << "Armor:            Loincloth\n";
+			break;
+		case CLOTH:
+			cout << "Armor:            Cloth Armor\n";
+			break;
+		case LEATHER:
+			cout << "Armor:            Leather Armor\n";
+			break;
+		case CHAIN:
+			cout << "Armor:            Chain Armor\n";
+			break;
+		case PLATE:
+			cout << "Armor:            Plate Armor\n";
+			break;
+		case ANCIENTPLATE:
+			cout << "Armor:            Ancient Plate\n";
+			break;
+		case MAGICPLATE:
+			cout << "Armor:            Magic Plate\n";
+			break;
+		case ARCHANEPLATE:
+			cout << "Armor:            Archane Plate\n";
+			break;
+		case IMPERVIUMPLATE:
+			cout << "Armor:            Impervium Plate\n";
+			break;
+		default:
+			cout << "Armor:            Broken\n";
+	}
+
+	cout << "Armor set name:   " << displayArmorName(tmpSaveFile.armor, tmpSaveFile.charClass) << "\n";
+
+	cout << "Masteries:        " << tmpSaveFile.masteries << "\n";
+
+	switch (tmpSaveFile.cheated)
+	{
+		case true:
+			cout << "Cheated:         True\n";
+			break;
+		case false:
+			cout << "Cheated:         False\n";
+			break;
+	}
+
+	cout << "+=================================+\n";
+	cout << "   Debug -> ENDED\n";
+	cout << "+=================================+\n";
+}
+
 void writeToFile(character *tmpChar)
 {
 	// Create the var for the save file.
@@ -766,79 +982,130 @@ void loadSave()
 				cout << "This value has to be a NUMBER.\nStrength = ";
 				cin >> valueItem;
 				player1.strength = valueItem;
-				cout << "   Strength = " << player1.strength;
+				cout << "   Strength = " << player1.strength << "\n";
 				reroll = true;
 			case "02":
 				cout << "This value has to be a NUMBER.\nCleverness = ";
 				cin >> valueItem;
 				player1.cleverness = valueItem;
-				cout << "   Cleverness = " << player1.cleverness;
+				cout << "   Cleverness = " << player1.cleverness << "\n";
 				reroll = true;
 			case "03":
 				cout << "This value has to be a NUMBER.\nDexterity = ";
 				cin >> valueItem;
 				player1.dexterity = valueItem;
-				cout << "   Dexterity = " << player1.dexterity;
+				cout << "   Dexterity = " << player1.dexterity << "\n";
 				reroll = true;
 			case "04":
 				cout << "This value has to be a NUMBER.\nFaith = ";
 				cin >> valueItem;
 				player1.faith = valueItem;
-				cout << "   Faith = " << player1.faith;
+				cout << "   Faith = " << player1.faith << "\n";
 				reroll = true;
 			case "05":
 				cout << "This value has to be a NUMBER.\nFocus = ";
 				cin >> valueItem;
 				player1.focus = valueItem;
-				cout << "   Focus = " << player1.focus;
+				cout << "   Focus = " << player1.focus << "\n";
 				reroll = true;
 			case "06":
 				cout << "This value has to be a NUMBER.\nInsperation = ";
 				cin >> valueItem;
 				player1.insperation = valueItem;
-				cout << "   Insperation = " << player1.insperation;
+				cout << "   Insperation = " << player1.insperation << "\n";
 				reroll = true;
 			case "07":
 				cout << "This value has to be a NUMBER.\nCopper = ";
 				cin >> valueItem;
 				player1.copper = valueItem;
-				cout << "   Copper = " << player1.copper;
+				cout << "   Copper = " << player1.copper "\n";
 				reroll = true;
 			case "08":
 				cout << "This value has to be a NUMBER.\nHitpoints = ";
 				cin >> valueItem;
 				player1.hp = valueItem;
-				cout << "   Hitpoints = " << player1.hp;
+				cout << "   Hitpoints = " << player1.hp << "\n";
 				reroll = true;
 			case "09":
 				cout << "This value has to be a NUMBER.\nMax Hitpoints = ";
 				cin >> valueItem;
 				player1.hpMax = valueItem;
-				cout << "   Max Hitpoints = " << player1.hpMax;
+				cout << "   Max Hitpoints = " << player1.hpMax << "\n";
 				reroll = true;
 			case "10":
 				cout << "This value has to be a NUMBER.\nMana/Stamina = ";
 				cin >> valueItem;
 				player1.mp = valueItem;
-				cout << "   Mana/Stamina = " << player1.mp;
+				cout << "   Mana/Stamina = " << player1.mp << "\n";
 				reroll = true;
 			case "11":
 				cout << "This value has to be a NUMBER.\nMax Mana/Stamina = ";
 				cin >> valueItem;
 				player1.mpMax = valueItem;
-				cout << "   Max Mana/Stamina = " << player1.mpMax;
+				cout << "   Max Mana/Stamina = " << player1.mpMax << "\n";
 				reroll = true;
 			case "12":
 				cout << "This value has to be a NUMBER.\nMasteries = ";
 				cin >> valueItem;
 				player1.masteries = valueItem;
-				cout << "   Masteries = " << player1.masteries;
+				cout << "   Masteries = " << player1.masteries << "\n";
 				reroll = true;
 			case "13":
 				cout << "This value has to be a NUMBER.\nQUIT=0,TOWN=1,FOREST=2,VIEWSTATS=3,MONSTER=4,SAVE=5,\nARMORSMITH=6,BUYARMOR=7,SELLARMOR=8,TAVERN=9,\nWEAPONSMITH=10,BUYWEAPON=11,SELLWEAPON=12,CHAPEL=13,\nBANK=14,ALCHIMEST=15\nLocation = ";
 				cin >> valueItem;
-				player1.location = valueItem;
-				cout << "Location = ";
+				switch (valueItem)
+				{
+					case "0":
+						player1.location = QUIT;
+						break;
+					case "1":
+						player1.location = TOWN;
+						break;
+					case "2":
+						player1.location = FOREST;
+						break;
+					case "3":
+						player1.location = VIEWSTATS;
+						break;
+					case "4":
+						player1.location = MONSTER;
+						break;
+					case "5":
+						player1.location = SAVE;
+						break;
+					case "6":
+						player1.location = ARMORSMITH;
+						break;
+					case "7":
+						player1.location = BUYARMOR;
+						break;
+					case "8":
+						player1.location = SELLARMOR;
+						break;
+					case "9":
+						player1.location = TAVERN;
+						break;
+					case "10":
+						player1.location = WEAPONSMITH;
+						break;
+					case "11":
+						player1.location = BUYWEAPON;
+						break;
+					case "12":
+						player1.location = SELLWEAPON;
+						break;
+					case "13":
+						player1.location = CHAPEL;
+						break;
+					case "14":
+						player1.location = BANK;
+						break;
+					case "15":
+						player1.location = ALCHIMEST;
+						break;
+				}
+				cout << "\n";
+				cout << "   Location = ";
 				switch (player1.location)
 				{
 					case QUIT:
@@ -893,10 +1160,35 @@ void loadSave()
 				cout << "\n";
 				reroll = true;
 			case "14":
-				cout << "This value has to be a NUMBER.\nFIGHTER=0,CLERIC=1,THEIF=2,BARD=3,ROUGE=4,TINKER=5,\nMAGE=6\nClass = ";
+				cout << "This value has to be a NUMBER.\nFIGHTER=0,CLERIC=1,THIEF=2,BARD=3,ROUGE=4,TINKER=5,\nMAGE=6\nClass = ";
 				cin >> valueItem;
-				player1.charClass = valueItem;
-				cout << "Class = ";
+				switch (valueItem)
+				{
+					default:
+					case "0":
+						player1.charClass = FIGHTER;
+						break;
+					case "1":
+						player1.charClass = CLERIC;
+						break;
+					case "2":
+						player1.charClass = THIEF;
+						break;
+					case "3":
+						player1.charClass = BARD;
+						break;
+					case "4":
+						player1.charClass = ROUGE;
+						break;
+					case "5":
+						player1.charClass = TINKER;
+						break;
+					case "6":
+						player1.charClass = MAGE;
+						break;
+				}
+				cout << "\n";
+				cout << "   Class = ";
 				switch (player1.charClass)
 				{
 					case FIGHTER:
@@ -905,8 +1197,8 @@ void loadSave()
 					case CLERIC:
 						cout << "CLERIC";
 						break;
-					case THEIF:
-						cout << "THEIF";
+					case THIEF:
+						cout << "THIEF";
 						break;
 					case BARD:
 						cout << "BARD";
@@ -930,32 +1222,32 @@ void loadSave()
 				{
 					default:
 					case "0":
-						player1.race = FISTS;
+						player1.race = HUMAN;
 						break;
 					case "1":
-						player1.weapon = DAGGER;
+						player1.race = ELF;
 						break;
 					case "2":
-						player1.weapon = STAFF;
+						player1.race = DARKELF;
 						break;
 					case "3":
-						player1.weapon = SWORD;
+						player1.race = ANGEL;
 						break;
 					case "4":
-						player1.weapon = ANCIENTBLADE;
+						player1.race = MONGREL;
 						break;
 					case "5":
-						player1.weapon = MAGICBLADE;
+						player1.race = SHAMANI;
 						break;
 					case "6":
-						player1.weapon = ARCHANEBLADE;
+						player1.race = NIBELUNG;
 						break;
 					case "7":
-						player1.weapon = VOIDEXCALIBUR;
+						player1.race = UNDEAD;
 						break;
 				}
 				cout << "\n";
-				cout << "Race = ";
+				cout << "   Race = ";
 				switch (player1.charRace)
 				{
 					case HUMAN:
@@ -983,11 +1275,72 @@ void loadSave()
 						cout << "UNDEAD";
 						break;
 				}
+				cout << "\n";
 				reroll = true;
 			case "16":
-				cout << "This value has to be a NUMBER.\nQUIT=0,TOWN=1,FOREST=2,VIEWSTATS=3,MONSTER=4,SAVE=5,\nARMORSMITH=6,BUYARMOR=7,SELLARMOR=8,TAVERN=9,\nWEAPONSMITH=10,BUYWEAPON=11,SELLWEAPON=12,CHAPEL=13,\nBANK=14,ALCHIMEST=15\nLocation = ";
-
-				cout << "This value has to be a NUMBER.\nLOINCLOTH=0,CLOTH=1,LEATHER=2,CHAIN=3,PLATE=4,\nANCIENTPLATE=5,VOIDEXCALIBUR=6\nWeapon = ";
+				cout << "This value has to be a NUMBER.\nFISTS=0,DAGGER=1,STAFF=2,ANCIENTBLADE=3,MAGICBLADE=4,\nARCHANEBLADE=5,VOIDEXCALIBUR=6\nWeapon = ";
+				cin >> valueItem;
+				switch (valueItem)
+				{
+					default:
+					case "0":
+						player1.weapon = FISTS;
+						break;
+					case "1":
+						player1.weapon = DAGGER;
+						break;
+					case "2":
+						player1.weapon = STAFF;
+						break;
+					case "3":
+						player1.weapon = SWORD;
+						break;
+					case "4":
+						player1.weapon = ANCIENTBLADE;
+						break;
+					case "5":
+						player1.weapon = MAGICBLADE;
+						break;
+					case "6":
+						player1.weapon = ARCHANEBLADE;
+						break;
+					case "7":
+						player1.weapon = VOIDEXCALIBUR;
+						break;
+				}
+				cout << "\n";
+				cout << "   Weapon = ";
+				switch (player1.weapon)
+				{
+					case FISTS:
+						cout << "FISTS";
+						break;
+					case DAGGER:
+						cout << "DAGGER";
+						break;
+					case STAFF:
+						cout << "STAFF";
+						break;
+					case SWORD:
+						cout << "SWORD";
+						break;
+					case ANCIENTBLADE:
+						cout << "ANCIENTBLADE";
+						break;
+					case MAGICBLADE:
+						cout << "MAGICBLADE";
+						break;
+					case ARCHANEBLADE:
+						cout << "ARCHANEBLADE";
+						break;
+					case VOIDEXCALIBUR:
+						cout << "VOIDEXCALIBUR";
+						break;
+				}
+				cout << "\n";
+				reroll = true;
+			case "17":
+				cout << "This value has to be a NUMBER.\nLOINCLOTH=0,CLOTH=1,LEATHER=2,CHAIN=3,PLATE=4,\nANCIENTPLATE=5,MAGICPLATE=6,ARCHANEPLATE=7,\nIMPERVIUMPLATE=8\nWeapon = ";
 				cin >> valueItem;
 				switch (valueItem)
 				{
@@ -1021,7 +1374,7 @@ void loadSave()
 						break;
 				}
 				cout << "\n";
-				cout << "Armor = ";
+				cout << "   Armor = ";
 				switch (player1.armor)
 				{
 					case LOINCLOTH:
@@ -1054,67 +1407,6 @@ void loadSave()
 				}
 				cout << "\n";
 				reroll = true;
-			case "17":
-				cout << "This value has to be a NUMBER.\nFISTS=0,DAGGER=1,STAFF=2,ANCIENTBLADE=3,MAGICBLADE=4,\nARCHANEBLADE=5,VOIDEXCALIBUR=6\nWeapon = ";
-				cin >> valueItem;
-				switch (valueItem)
-				{
-					default:
-					case "0":
-						player1.weapon = FISTS;
-						break;
-					case "1":
-						player1.weapon = DAGGER;
-						break;
-					case "2":
-						player1.weapon = STAFF;
-						break;
-					case "3":
-						player1.weapon = SWORD;
-						break;
-					case "4":
-						player1.weapon = ANCIENTBLADE;
-						break;
-					case "5":
-						player1.weapon = MAGICBLADE;
-						break;
-					case "6":
-						player1.weapon = ARCHANEBLADE;
-						break;
-					case "7":
-						player1.weapon = VOIDEXCALIBUR;
-						break;
-				}
-				cout << "\n";
-				cout << "Weapon = ";
-				switch (player1.weapon)
-				{
-					case FISTS:
-						cout << "FISTS";
-						break;
-					case DAGGER:
-						cout << "DAGGER";
-						break;
-					case STAFF:
-						cout << "STAFF";
-						break;
-					case SWORD:
-						cout << "SWORD";
-						break;
-					case ANCIENTBLADE:
-						cout << "ANCIENTBLADE";
-						break;
-					case MAGICBLADE:
-						cout << "MAGICBLADE";
-						break;
-					case ARCHANEBLADE:
-						cout << "ARCHANEBLADE";
-						break;
-					case VOIDEXCALIBUR:
-						cout << "VOIDEXCALIBUR";
-						break;
-				}
-				reroll = true;
 			case "18":
 				cout << "This value has to be a NUMBER.\nFALSE=0,TRUE=1\nCheated = ";
 				cin >> valueItem;
@@ -1129,7 +1421,7 @@ void loadSave()
 						break;
 				}
 				cout << "\n";
-				cout << "Cheated = ";
+				cout << "   Cheated = ";
 				switch (player1.cheated)
 				{
 					case true:
@@ -1164,7 +1456,17 @@ void loadSave()
 
 void displayAbout()
 {
-
+	cout << "\n";
+	cout << "+------------------------------------------------------------+\n";
+	cout << "|                                                            |\n";
+	cout << "|  consoleRPGEditor                                          |\n";
+	cout << "|  Created By: Nire Inicana                                  |\n";
+	cout << "|  Website: https://github.com/TZCraft-NSR/consoleRPGEditor  |\n";
+	cout << "|  Copyright (c) 2014 TZCraft NSR                            |\n";
+	cout << "|  Licence: MIT                                              |\n";
+	cout << "|                                                            |\n";
+	cout << "+------------------------------------------------------------+\n";
+	cout << "\n\n";
 }
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -1173,13 +1475,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	char menuItem;
 
 	cout << "Welcome to the consoleRPG Editor!\n"
-	cout << "   By: Nire Inicana\n";
 	cout << "\n"
-	cout << "[1] Load 'save1.sav'\t[2] About consoleRPGEditor\n";
+	cout << "NOTE: Please place this in the same folder as save1.sav!\n";
+	cout << "\n";
 
 	while (reroll)
 	{
 		reroll = false;
+
+		cout << "[1] Load 'save1.sav'\t[2] About consoleRPGEditor\n[3] Quit";
 
 		cin << menuItem;
 
@@ -1189,28 +1493,31 @@ int _tmain(int argc, _TCHAR* argv[])
 		{
 			case '1':
 				loadSave();
+				reroll = true;
 				break;
 			case '2':
 				displayAbout();
+				reroll = true;
+				break;
+			case '3':
+				reroll = false;
 				break;
 			default:
-				if (menuItem != ('3', '4', '5'))
+				if (menuItem != ('4', '5', '6'))
 				{
 					cout << "Please choose a correct input.\n";
-					reroll = true;
 				}
+				reroll = true;
 				break;
 		}
 
-		if (menuItem == ('3', '4', '5'))
+		if (menuItem == ('4', '5', '6'))
 		{
 			debug = true;
 
 			cout << "+=================================+\n";
 			cout << "   Debug -> ENABLED\n";
 			cout << "+=================================+\n";
-
-			reroll = true;
 		}
 	}
 	return 0;
