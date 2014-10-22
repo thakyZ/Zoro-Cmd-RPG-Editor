@@ -8,6 +8,8 @@
 #include <fstream>
 using namespace std;
 
+bool debug = false;
+
 // Race types.
 enum RACE { HUMAN, ELF, DARKELF, ANGEL, MONGREL, SHAMANI, NIBELUNG, UNDEAD };
 
@@ -36,6 +38,7 @@ struct ATTRIBUTES
 	unsigned int cleverness; // The cleverness stat of the class.
 	unsigned int focus; // The focus stat of the class.
 };
+
 class character
 {
 	public:
@@ -53,6 +56,20 @@ class character
 
 		character()
 		{
+		}
+
+		void setAtts(int tmpStrength, int tmpFaith, int tmpDexterity, int tmpInsperation, int tmpCleverness, int tmpFocus)
+		{
+			ATTRIBUTES tmpAtts = NULL;
+
+			tmpAtts.strength = tmpStrength;
+			tmpAtts.faith = tmpFaith;
+			tmpAtts.dexterity = tmpDexterity;
+			tmpAtts.insperation = tmpInsperation;
+			tmpAtts.cleverness = tmpCleverness;
+			tmpAtts.focus = tmpFocus;
+
+			atts = tmpAtts;
 		}
 };
 
@@ -488,16 +505,16 @@ character getFromFile()
 	int masteries = playerSave.masteries; // The skills level of the player.
 	bool cheated = playerSave.cheated;
 
-	tmpChar.setLoc(location);
-	tmpChar.setAttsTest(strength, cleverness, dexterity, faith, focus, insperation);
-	tmpChar.setClass(charClass);
-	tmpChar.setCopper(copper);
-	tmpChar.setHealth(hp);
-	tmpChar.setMana(mp);
-	tmpChar.setMasteries(masteries);
-	tmpChar.setMaxHealth(hpMax);
-	tmpChar.setMaxMana(mpMax);
-	tmpChar.setRace(charRace);
+	tmpChar.location  = location;
+	tmpChar.setAtts(strength, cleverness, dexterity, faith, focus, insperation);
+	tmpChar.charClass = charClass;
+	tmpChar.copper = copper;
+	tmpChar.hp = hp;
+	tmpChar.mp = mp;
+	tmpChar.masteries = masteries;
+	tmpChar.hpMax = hpMax;
+	tmpChar.mpMax = mpMax;
+	tmpChar.charRace = charRace;
 
 	// Debug the class.
 	if (debug)
@@ -514,13 +531,159 @@ character getFromFile()
 	return tmpChar;
 }
 
+void loadSave()
+{
+	character player1 = getFromFile();
+
+	cout << "\n";
+	cout << "Player Save File:";
+
+	cout << "+-----+--------------------+----------\n";
+	cout << "| [#]  | Property           | Value    \n";
+	cout << "+-----+--------------------+----------\n";
+	cout << "| [-]  | Attributes:        |          \n";
+	cout << "| [1]  |    Strength:       | " << player1.atts.strength << "\n";
+	cout << "| [2]  |    Cleverness:     | " << player1.atts.cleverness << "\n";
+	cout << "| [3]  |    Dexterity:      | " << player1.atts.dexterity << "\n";
+	cout << "| [4]  |    Faith:          | " << player1.atts.faith << "\n";
+	cout << "| [5]  |    Focus:          | " << player1.atts.focus << "\n";
+	cout << "| [6]  |    Insperation:    | " << player1.atts.insperation << "\n";
+	cout << "| [7]  | Copper:            | " << player1.copper << "\n";
+	cout << "| [8]  | Hitpoints:         | " << player1.hp << "\n";
+	cout << "| [9]  | Max Hitpoints:     | " << player1.hpMax << "\n";
+	cout << "| [10] | Mana/Stamina:      | " << player1.mp << "\n";
+	cout << "| [11] | Max Mana/Stamina:  | " << player1.mpMax << "\n";
+	cout << "| [12] | Masteries:         | " << player1.masteries << "\n";
+	cout << "| [13] | Location:          | ";
+	switch (player1.location)
+	{
+		case QUIT:
+			cout << "Quit";
+			break;
+		case TOWN:
+			cout << "Town";
+			break;
+		case FOREST:
+			cout << "Forest";
+			break;
+		case VIEWSTATS:
+			cout << "View Stats";
+			break;
+		case MONSTER:
+			cout << "Monster";
+			break;
+		case SAVE:
+			cout << "Save";
+			break;
+		case ARMORSMITH:
+			cout << "Armor Smith";
+			break;
+		case BUYARMOR:
+			cout << "Buy Armor";
+			break;
+		case SELLARMOR:
+			cout << "Sell Armor";
+			break;
+		case TAVERN:
+			cout << "Tavern";
+			break;
+		case WEAPONSMITH:
+			cout << "Weapon Smith";
+			break;
+		case BUYWEAPON:
+			cout << "Buy Weapon";
+			break;
+		case SELLWEAPON:
+			cout << "Sell Weapon";
+			break;
+		case CHAPEL:
+			cout << "Chapel";
+			break;
+		case BANK:
+			cout << "Bank";
+			break;
+		case ALCHIMEST:
+			cout << "Alchimest";
+			break;
+	}
+	cout << "\n";
+	cout << "| [14] | Class:             | ";
+	switch (player1.charClass)
+	{
+		case FIGHTER:
+			cout << "Fighter";
+			break;
+		case CLERIC:
+			cout << "Cleric";
+			break;
+		case THEIF:
+			cout << "Theif";
+			break;
+		case BARD:
+			cout << "Bard";
+			break;
+		case ROUGE:
+			cout << "Rouge";
+			break;
+		case TINKER:
+			cout << "Tinker";
+			break;
+		case MAGE:
+			cout << "Mage";
+			break;
+	}
+}
+
+void displayAbout()
+{
+
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	bool reroll = true;
 	char menuItem;
 
-	cout << "Welcome to the consoleRPG Editor!"
-	cout << "   
+	cout << "Welcome to the consoleRPG Editor!\n"
+	cout << "   By: Nire Inicana\n";
+	cout << "\n"
+	cout << "[1] Load 'save1.sav'\t[2] About consoleRPGEditor\n";
+
+	while (reroll)
+	{
+		reroll = false;
+
+		cin << menuItem;
+
+		cout << "\n";
+
+		switch (menuItem)
+		{
+			case '1':
+				loadSave();
+				break;
+			case '2':
+				displayAbout();
+				break;
+			default:
+				if (menuItem != ('3', '4', '5'))
+				{
+					cout << "Please choose a correct input.\n";
+					reroll = true;
+				}
+				break;
+		}
+
+		if (menuItem == ('3', '4', '5'))
+		{
+			debug = true;
+
+			cout << "+=================================+\n";
+			cout << "   Debug -> ENABLED\n";
+			cout << "+=================================+\n";
+
+			reroll = true;
+		}
+	}
 	return 0;
 }
-
