@@ -1468,14 +1468,19 @@ void loadSave()
 					case 'Y':
 						reroll = false;
 						break;
-					default:
 					case 'n':
 					case 'N':
+						reroll = false;
+						break;
+					default:
 						reroll = true;
 						break;
 				}
 				cout << "\n\n";
-				writeToFile(&player1);
+				if (saveItem == 'y' || saveItem == 'Y')
+				{
+					writeToFile(&player1);
+				}
 				break;
 		}
 	}
