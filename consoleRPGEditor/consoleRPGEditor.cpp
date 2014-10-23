@@ -26,7 +26,7 @@ enum ARMOR { LOINCLOTH, CLOTH, LEATHER, CHAIN, PLATE, ANCIENTPLATE, MAGICPLATE, 
 enum WEAPON { FISTS, DAGGER, STAFF, SWORD, ANCIENTBLADE, MAGICBLADE, ARCHANEBLADE, VOIDEXCALIBUR };
 
 // Potions.
-enum Potions { HEALTH, MANA, EXP, CHEAT };
+enum POTION { HEALTH, MANA, EXP, CHEAT };
 
 // Stats Tree.
 struct ATTRIBUTES
@@ -1536,21 +1536,25 @@ int _tmain(int argc, _TCHAR* argv[])
 				reroll = false;
 				break;
 			default:
-				if (menuItem != ('4', '5', '6'))
+				if (menuItem != '6')
 				{
-					cout << "Please choose a correct input.\n";
+					cout << "Please choose a correct input.\n\n";
+					reroll = true;
 				}
-				reroll = true;
 				break;
 		}
 
-		if (menuItem == (4, 5, 6))
+		if (menuItem == '6')
 		{
 			debug = true;
 
+			cout << "\n";
 			cout << "+=================================+\n";
 			cout << "   Debug -> ENABLED\n";
 			cout << "+=================================+\n";
+			cout << "\n";
+
+			reroll = true;
 		}
 	}
 	return 0;
