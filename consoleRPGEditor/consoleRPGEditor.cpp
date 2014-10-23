@@ -465,25 +465,25 @@ void debugSave(playerSaveData tmpSaveFile)
 	switch (tmpSaveFile.charClass)
 	{
 		case FIGHTER:
-			cout << "Class:            Fighter\n";
+			cout << "Class:            FIGHTER\n";
 			break;
 		case CLERIC:
-			cout << "Class:            Cleric\n";
+			cout << "Class:            CLERIC\n";
 			break;
 		case ROUGE:
-			cout << "Class:            Rouge\n";
+			cout << "Class:            ROUGE\n";
 			break;
 		case BARD:
-			cout << "Class:            Bard\n";
+			cout << "Class:            BARD\n";
 			break;
 		case THEIF:
-			cout << "Class:            Theif\n";
+			cout << "Class:            THEIF\n";
 			break;
 		case TINKER:
-			cout << "Class:            Tinker\n";
+			cout << "Class:            TINKER\n";
 			break;
 		case MAGE:
-			cout << "Class:            Mage\n";
+			cout << "Class:            MAGE\n";
 			break;
 		default:
 			cout << "Class:            BROKEN\n";
@@ -493,28 +493,28 @@ void debugSave(playerSaveData tmpSaveFile)
 	switch (tmpSaveFile.charRace)
 	{
 		case HUMAN:
-			cout << "Race:             Human\n";
+			cout << "Race:             HUMAN\n";
 			break;
 		case ELF:
-			cout << "Race:             Elf\n";
+			cout << "Race:             ELF\n";
 			break;
 		case DARKELF:
-			cout << "Race:             Dark Elf\n";
+			cout << "Race:             DARKELF\n";
 			break;
 		case ANGEL:
-			cout << "Race:             Angel\n";
+			cout << "Race:             ANGEL\n";
 			break;
 		case MONGREL:
-			cout << "Race:             Mongrel\n";
+			cout << "Race:             MONGREL\n";
 			break;
 		case SHAMANI:
-			cout << "Race:             Shamani\n";
+			cout << "Race:             SHAMANI\n";
 			break;
 		case NIBELUNG:
-			cout << "Race:             Nibelung\n";
+			cout << "Race:             NIBELUNG\n";
 			break;
 		case UNDEAD:
-			cout << "Race:             Undead\n";
+			cout << "Race:             UNDEAD\n";
 			break;
 		default:
 			cout << "Race:             BROKEN\n";
@@ -529,46 +529,46 @@ void debugSave(playerSaveData tmpSaveFile)
 	switch (tmpSaveFile.location)
 	{
 		case QUIT:
-			cout << "Location:         Quit\n";
+			cout << "Location:         QUIT\n";
 			break;
 		case VIEWSTATS:
-			cout << "Location:         View Stats\n";
+			cout << "Location:         VIEWSTATS\n";
 			break;
 		case TOWN:
-			cout << "Location:         Town\n";
+			cout << "Location:         TOWN\n";
 			break;
 		case FOREST:
-			cout << "Location:         Forest\n";
+			cout << "Location:         FOREST\n";
 			break;
 		case MONSTER:
-			cout << "Location:         Monster\n";
+			cout << "Location:         MONSTER\n";
 			break;
 		case SAVE:
-			cout << "Location:         Save\n";
+			cout << "Location:         SAVE\n";
 			break;
 		case ARMORSMITH:
-			cout << "Location:         Armor Smith\n";
+			cout << "Location:         ARMORSMITH\n";
 			break;
 		case BUYARMOR:
-			cout << "Location:         Buy Armor\n";
+			cout << "Location:         BUYARMOR\n";
 			break;
 		case SELLARMOR:
-			cout << "Location:         Sell Armor\n";
+			cout << "Location:         SELLARMOR\n";
 			break;
 		case TAVERN:
-			cout << "Location:         Tavern\n";
+			cout << "Location:         TAVERN\n";
 			break;
 		case WEAPONSMITH:
-			cout << "Location:         Weapon Smith\n";
+			cout << "Location:         WEAPONSMITH\n";
 			break;
 		case CHAPEL:
-			cout << "Location:         Chapel\n";
+			cout << "Location:         CHAPEL\n";
 			break;
 		case BANK:
-			cout << "Location:         Bank\n";
+			cout << "Location:         BANK\n";
 			break;
 		case ALCHIMEST:
-			cout << "Location:         Alchimest\n";
+			cout << "Location:         ALCHIMEST\n";
 			break;
 		default:
 			cout << "Location:         BROKEN\n";
@@ -577,31 +577,31 @@ void debugSave(playerSaveData tmpSaveFile)
 	switch (tmpSaveFile.weapon)
 	{
 		case FISTS:
-			cout << "Weapon:           Fists\n";
+			cout << "Weapon:           FISTS\n";
 			break;
 		case DAGGER:
-			cout << "Weapon:           Dagger\n";
+			cout << "Weapon:           DAGGER\n";
 			break;
 		case SWORD:
-			cout << "Weapon:           Sword\n";
+			cout << "Weapon:           SWORD\n";
 			break;
 		case STAFF:
-			cout << "Weapon:           Staff\n";
+			cout << "Weapon:           STAFF\n";
 			break;
 		case ANCIENTBLADE:
-			cout << "Weapon:           Ancient Blade\n";
+			cout << "Weapon:           ANCIENTBLADE\n";
 			break;
 		case MAGICBLADE:
-			cout << "Weapon:           Magic blade\n";
+			cout << "Weapon:           MAGICBLADE\n";
 			break;
 		case ARCHANEBLADE:
-			cout << "Weapon:           Archane blade\n";
+			cout << "Weapon:           ARCHANEBLADE\n";
 			break;
 		case VOIDEXCALIBUR:
-			cout << "Weapon:           Void Excalibur\n";
+			cout << "Weapon:           VOIDEXCALIBUR\n";
 			break;
 		default:
-			cout << "Weapon:           Broken\n";
+			cout << "Weapon:           BROKEN\n";
 	}
 
 	cout << "Weapon set name:  " << displayWeaponName(tmpSaveFile.weapon, tmpSaveFile.charClass) << "\n";
@@ -609,34 +609,34 @@ void debugSave(playerSaveData tmpSaveFile)
 	switch (tmpSaveFile.armor)
 	{
 		case LOINCLOTH:
-			cout << "Armor:            Loincloth\n";
+			cout << "Armor:            LOINCLOTH\n";
 			break;
 		case CLOTH:
-			cout << "Armor:            Cloth Armor\n";
+			cout << "Armor:            CLOTH\n";
 			break;
 		case LEATHER:
-			cout << "Armor:            Leather Armor\n";
+			cout << "Armor:            LEATHER\n";
 			break;
 		case CHAIN:
-			cout << "Armor:            Chain Armor\n";
+			cout << "Armor:            CHAIN\n";
 			break;
 		case PLATE:
-			cout << "Armor:            Plate Armor\n";
+			cout << "Armor:            PLATE\n";
 			break;
 		case ANCIENTPLATE:
-			cout << "Armor:            Ancient Plate\n";
+			cout << "Armor:            ANCIENTPLATE\n";
 			break;
 		case MAGICPLATE:
-			cout << "Armor:            Magic Plate\n";
+			cout << "Armor:            MAGICPLATE\n";
 			break;
 		case ARCHANEPLATE:
-			cout << "Armor:            Archane Plate\n";
+			cout << "Armor:            ARCHANEPLATE\n";
 			break;
 		case IMPERVIUMPLATE:
-			cout << "Armor:            Impervium Plate\n";
+			cout << "Armor:            IMPERVIUMPLATE\n";
 			break;
 		default:
-			cout << "Armor:            Broken\n";
+			cout << "Armor:            BROKEN\n";
 	}
 
 	cout << "Armor set name:   " << displayArmorName(tmpSaveFile.armor, tmpSaveFile.charClass) << "\n";
@@ -646,10 +646,10 @@ void debugSave(playerSaveData tmpSaveFile)
 	switch (tmpSaveFile.cheated)
 	{
 		case true:
-			cout << "Cheated:         True\n";
+			cout << "Cheated:         TRUE\n";
 			break;
 		case false:
-			cout << "Cheated:         False\n";
+			cout << "Cheated:         FALSE\n";
 			break;
 	}
 
@@ -719,7 +719,7 @@ character getFromFile()
 	WEAPON weapon = playerSave.weapon; // The weapon the character has.
 	ARMOR armor = playerSave.armor; // The armor the character has.
 	int masteries = playerSave.masteries; // The skills level of the player.
-	bool cheated = playerSave.cheated;
+	bool cheated = playerSave.cheated; // If the player has cheated
 
 	tmpChar.location  = location;
 	tmpChar.setAtts(strength, cleverness, dexterity, faith, focus, insperation);
