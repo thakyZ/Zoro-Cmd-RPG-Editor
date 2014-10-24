@@ -8,7 +8,8 @@
 #include <fstream>
 using namespace std;
 
-bool debug = false;
+bool debug = false; // To be used for debugging
+bool permDebug = false; // To turn on debugging if the player doesn't use it.
 
 // Race types.
 enum RACE { HUMAN, ELF, DARKELF, ANGEL, MONGREL, SHAMANI, NIBELUNG, UNDEAD };
@@ -39,6 +40,7 @@ struct ATTRIBUTES
 	unsigned int focus; // The focus stat of the class.
 };
 
+// The class for the character.
 class character
 {
 	public:
@@ -54,10 +56,12 @@ class character
 		int masteries; // The skills level of the player.
 		bool cheated; // If the player cheated.
 
+		// Create the character sets.
 		character()
 		{
 		}
 
+		// Set the attributes in one line.
 		void setAtts(int tmpStrength, int tmpFaith, int tmpDexterity, int tmpInsperation, int tmpCleverness, int tmpFocus)
 		{
 			ATTRIBUTES tmpAtts;
@@ -73,6 +77,7 @@ class character
 		}
 };
 
+// The player save data class.
 class playerSaveData
 {
 	public:
@@ -95,10 +100,12 @@ class playerSaveData
 		int masteries; // The skills level of the player.
 		bool cheated; // If the player has cheated.
 
+		// Create the player save data class.
 		playerSaveData()
 		{
 		}
 
+		// Write the character to the player save data class.
 		void init(character *tmpChar)
 		{
 			strength = tmpChar->atts.strength; // Set the strength.
@@ -122,6 +129,7 @@ class playerSaveData
 		}
 };
 
+// Display the weapon name by the player's class.
 char *displayWeaponName(int tmpWeapon, int tmpCharClass)
 {
 	switch (tmpCharClass)
@@ -363,6 +371,7 @@ char *displayWeaponName(int tmpWeapon, int tmpCharClass)
 	return "";
 }
 
+// Display the armor name by the player's class.
 char *displayArmorName(int tmpArmor, int tmpCharClass)
 {
 	switch (tmpCharClass)
@@ -442,6 +451,7 @@ char *displayArmorName(int tmpArmor, int tmpCharClass)
 	return "";
 }
 
+// Debug the save file.
 void debugSave(playerSaveData tmpSaveFile)
 {
 	cout << "+=================================+\n";
@@ -658,6 +668,7 @@ void debugSave(playerSaveData tmpSaveFile)
 	cout << "+=================================+\n";
 }
 
+// Write to the save file.
 void writeToFile(character *tmpChar)
 {
 	// Create the var for the save file.
@@ -668,6 +679,11 @@ void writeToFile(character *tmpChar)
 
 	// Initlize the player save.
 	playerSave.init(tmpChar);
+
+	if (playerSave.copper >= 25000 && !debug && !permDebug)
+	{
+		playerSave.copper = 24999;
+	}
 
 	// Open the save file.
 	myfile.open("./save1.sav",'w');
@@ -680,14 +696,13 @@ void writeToFile(character *tmpChar)
 	{
 		debugSave(playerSave);
 	}
-
 	// Close the file after we are done with it.
 	myfile.close();
 
 	cout << "File saved.\n";
 }
 
-// To load a game.
+// Load from the save file.
 character getFromFile()
 {
 	// The character var for the loaded file.
@@ -750,6 +765,7 @@ character getFromFile()
 	return tmpChar;
 }
 
+// Display the save table.
 void displaySave(character player1)
 {
 	cout << "\n";
@@ -958,21 +974,24 @@ void displaySave(character player1)
 	cout << "+------+--------------------+------------------------\n";
 }
 
+// Load the save.
 void loadSave()
 {
-	character player1 = getFromFile();
-	int menuItem = 0;
-	char saveItem;
-	int valueItem = 0;
-	bool reroll = true;
+	character player1 = getFromFile(); // Start up the player editor.
+	int menuItem = 0; // The option to choose what to edit.
+	char saveItem; // To choose to save or not.
+	int valueItem = 0; // To change the value of an option.
+	bool reroll = true; // If the player changes a value or doesnt input correctly.
 
+	// Start the loop.
 	while (reroll)
 	{
-		reroll = false;
+		reroll = false; // end the loop.
 
-		menuItem = 0;
-		valueItem = 0;
+		menuItem = 0; // Set the default when going back to displaying the table.
+		valueItem = 0; // Set the default when going back to displaying the table.
 
+		// Display the save table.
 		displaySave(player1);
 
 		cout << "\n";
@@ -980,97 +999,99 @@ void loadSave()
 		cout << "Please input the correct input when editing a property.\n";
 		cout << "   If you don't it'll break the save...\n";
 
+		// Get which number the user chooses.
 		cin >> menuItem;
 
 		cout << "\n\n";
 
+		// Choose from which number the user chooses.
 		switch (menuItem)
 		{
-			case 1:
+			case 1: // Strength
 				cout << "This value has to be a NUMBER.\nStrength = ";
 				cin >> valueItem;
 				player1.atts.strength = (int)valueItem;
 				cout << "   Strength = " << player1.atts.strength << "\n";
 				reroll = true;
 				break;
-			case 2:
+			case 2: // Cleverness
 				cout << "This value has to be a NUMBER.\nCleverness = ";
 				cin >> valueItem;
 				player1.atts.cleverness = (int)valueItem;
 				cout << "   Cleverness = " << player1.atts.cleverness << "\n";
 				reroll = true;
 				break;
-			case 3:
+			case 3: // Dexterity
 				cout << "This value has to be a NUMBER.\nDexterity = ";
 				cin >> valueItem;
 				player1.atts.dexterity = (int)valueItem;
 				cout << "   Dexterity = " << player1.atts.dexterity << "\n";
 				reroll = true;
 				break;
-			case 4:
+			case 4: // Faith
 				cout << "This value has to be a NUMBER.\nFaith = ";
 				cin >> valueItem;
 				player1.atts.faith = (int)valueItem;
 				cout << "   Faith = " << player1.atts.faith << "\n";
 				reroll = true;
 				break;
-			case 5:
+			case 5: // Focus
 				cout << "This value has to be a NUMBER.\nFocus = ";
 				cin >> valueItem;
 				player1.atts.focus = (int)valueItem;
 				cout << "   Focus = " << player1.atts.focus << "\n";
 				reroll = true;
 				break;
-			case 6:
+			case 6: // Insperation
 				cout << "This value has to be a NUMBER.\nInsperation = ";
 				cin >> valueItem;
 				player1.atts.insperation = (int)valueItem;
 				cout << "   Insperation = " << player1.atts.insperation << "\n";
 				reroll = true;
 				break;
-			case 7:
+			case 7: // Copper
 				cout << "This value has to be a NUMBER.\nCopper = ";
 				cin >> valueItem;
 				player1.copper = (int)valueItem;
 				cout << "   Copper = " << player1.copper << "\n";
 				reroll = true;
 				break;
-			case 8:
+			case 8: // Hitpoints
 				cout << "This value has to be a NUMBER.\nHitpoints = ";
 				cin >> valueItem;
 				player1.hp = (int)valueItem;
 				cout << "   Hitpoints = " << player1.hp << "\n";
 				reroll = true;
 				break;
-			case 9:
+			case 9: // Max Hitpoints
 				cout << "This value has to be a NUMBER.\nMax Hitpoints = ";
 				cin >> valueItem;
 				player1.hpMax = (int)valueItem;
 				cout << "   Max Hitpoints = " << player1.hpMax << "\n";
 				reroll = true;
 				break;
-			case 10:
+			case 10: // Mana/Stamina
 				cout << "This value has to be a NUMBER.\nMana/Stamina = ";
 				cin >> valueItem;
 				player1.mp = (int)valueItem;
 				cout << "   Mana/Stamina = " << player1.mp << "\n";
 				reroll = true;
 				break;
-			case 11:
+			case 11: // Max Mana/Stamina
 				cout << "This value has to be a NUMBER.\nMax Mana/Stamina = ";
 				cin >> valueItem;
 				player1.mpMax = (int)valueItem;
 				cout << "   Max Mana/Stamina = " << player1.mpMax << "\n";
 				reroll = true;
 				break;
-			case 12:
+			case 12: // Masteries
 				cout << "This value has to be a NUMBER.\nMasteries = ";
 				cin >> valueItem;
 				player1.masteries = (int)valueItem;
 				cout << "   Masteries = " << player1.masteries << "\n";
 				reroll = true;
 				break;
-			case 13:
+			case 13: // Location
 				cout << "This value has to be a NUMBER.\nQUIT=0,TOWN=1,FOREST=2,VIEWSTATS=3,MONSTER=4,SAVE=5,\nARMORSMITH=6,BUYARMOR=7,SELLARMOR=8,TAVERN=9,\nWEAPONSMITH=10,BUYWEAPON=11,SELLWEAPON=12,CHAPEL=13,\nBANK=14,ALCHIMEST=15\nLocation = ";
 				cin >> valueItem;
 				switch (valueItem)
@@ -1180,7 +1201,7 @@ void loadSave()
 				cout << "\n";
 				reroll = true;
 				break;
-			case 14:
+			case 14: // Class
 				cout << "This value has to be a NUMBER.\nFIGHTER=0,CLERIC=1,THEIF=2,BARD=3,ROUGE=4,TINKER=5,\nMAGE=6\nClass = ";
 				cin >> valueItem;
 				switch (valueItem)
@@ -1237,7 +1258,7 @@ void loadSave()
 				cout << "\n";
 				reroll = true;
 				break;
-			case 15:
+			case 15: // Race
 				cout << "This value has to be a NUMBER.\nHUMAN=0,ELF=1,DARKELF=2,ANGEL=3,MONGREL=4,SHAMANI=5\nNIBELUNG=6,UNDEAD=7\nRace = ";
 				cin >> valueItem;
 				switch (valueItem)
@@ -1300,7 +1321,7 @@ void loadSave()
 				cout << "\n";
 				reroll = true;
 				break;
-			case 16:
+			case 16: // Weapon
 				cout << "This value has to be a NUMBER.\nFISTS=0,DAGGER=1,STAFF=2,SWORD=3,ANCIENTBLADE=4,MAGICBLADE=5,\nARCHANEBLADE=6,VOIDEXCALIBUR=7\nWeapon = ";
 				cin >> valueItem;
 				switch (valueItem)
@@ -1363,7 +1384,7 @@ void loadSave()
 				cout << "\n";
 				reroll = true;
 				break;
-			case 17:
+			case 17: // Armor
 				cout << "This value has to be a NUMBER.\nLOINCLOTH=0,CLOTH=1,LEATHER=2,CHAIN=3,PLATE=4,\nANCIENTPLATE=5,MAGICPLATE=6,ARCHANEPLATE=7,\nIMPERVIUMPLATE=8\nWeapon = ";
 				cin >> valueItem;
 				switch (valueItem)
@@ -1432,7 +1453,7 @@ void loadSave()
 				cout << "\n";
 				reroll = true;
 				break;
-			case 18:
+			case 18: // Cheated
 				cout << "This value has to be a NUMBER.\nFALSE=0,TRUE=1\nCheated = ";
 				cin >> valueItem;
 				switch (valueItem)
@@ -1459,7 +1480,7 @@ void loadSave()
 				cout << "\n";
 				reroll = true;
 				break;
-			case 19:
+			case 19: // "Done."
 				cout << "Are you sure you want to save and exit? [Y]es [N]o\n";
 				cin >> saveItem;
 				switch (saveItem)
@@ -1486,6 +1507,7 @@ void loadSave()
 	}
 }
 
+// Display the about screen
 void displayAbout()
 {
 	cout << "\n";
@@ -1501,10 +1523,11 @@ void displayAbout()
 	cout << "\n\n";
 }
 
+// The main startup of the file
 int _tmain(int argc, _TCHAR* argv[])
 {
-	bool reroll = true;
-	char menuItem;
+	bool reroll = true; // The bool of if the user doesn't input the right input.
+	char menuItem; // The choice of which option to choose.
 
 	cout << "Welcome to the consoleRPG Editor!\n";
 	cout << "\n";
@@ -1515,7 +1538,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
 		reroll = false;
 
-		cout << "[1] Load 'save1.sav'\t[2] About consoleRPGEditor\n[3] Quit";
+		cout << "[L]oad 'save1.sav'\t[A]bout consoleRPGEditor\n[Q]uit";
 		cout << "\n";
 
 		cin >> menuItem;
@@ -1524,19 +1547,22 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		switch (menuItem)
 		{
-			case '1':
+			case 'l':
+			case 'L':
 				loadSave();
 				reroll = true;
 				break;
-			case '2':
+			case 'a':
+			case 'A':
 				displayAbout();
 				reroll = true;
 				break;
-			case '3':
+			case 'q':
+			case 'Q':
 				reroll = false;
 				break;
 			default:
-				if (menuItem != '6')
+				if (menuItem != '6' && !permDebug)
 				{
 					cout << "Please choose a correct input.\n\n";
 					reroll = true;
@@ -1544,7 +1570,7 @@ int _tmain(int argc, _TCHAR* argv[])
 				break;
 		}
 
-		if (menuItem == '6')
+		if (menuItem == '6' && permDebug)
 		{
 			debug = true;
 
