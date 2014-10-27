@@ -805,7 +805,7 @@ character *getFromFile()
 		cout << "Save loaded.\n";
 
 		// Return the character to return the char.
-		return tmpChar;
+		return &tmpChar;
 	}
 	else
 	{
@@ -1048,7 +1048,7 @@ void displaySave(character player1)
 // Load the save.
 void loadSave()
 {
-	character player1 = getFromFile(); // Start up the player editor.
+	character player1 = &getFromFile(); // Start up the player editor.
 	int menuItem = 0; // The option to choose what to edit.
 	char saveItem; // To choose to save or not.
 	int valueItem = 0; // To change the value of an option.
