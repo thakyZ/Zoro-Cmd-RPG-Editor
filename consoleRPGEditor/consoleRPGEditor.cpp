@@ -1428,6 +1428,7 @@ void loadSave()
 						break;
 					case TAKEMONEY:
 						cout << "TAKEMONEY";
+						break;
 					case ALCHIMEST:
 						cout << "ALCHIMEST";
 						break;
