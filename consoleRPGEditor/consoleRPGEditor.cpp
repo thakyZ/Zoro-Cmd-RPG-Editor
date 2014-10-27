@@ -1081,84 +1081,226 @@ void loadSave()
 			case 1: // Strength
 				cout << "This value has to be a NUMBER.\nStrength = ";
 				cin >> valueItem;
-				player1.atts.strength = valueItem;
+				cout << "\n";
+				if (valueItem < 0)
+				{
+					cout << "This value cannot be lower than 0";
+					player1.atts.strength = 0;
+				}
+				else
+				{
+					player1.atts.strength = valueItem;
+				}
+				cout << "\n";
 				cout << "   Strength = " << player1.atts.strength << "\n";
 				reroll = true;
 				break;
 			case 2: // Cleverness
 				cout << "This value has to be a NUMBER.\nCleverness = ";
 				cin >> valueItem;
-				player1.atts.cleverness = valueItem;
+				cout << "\n";
+				if (valueItem < 0)
+				{
+					cout << "This value cannot be lower than 0";
+					player1.atts.cleverness = 0;
+				}
+				else
+				{
+					player1.atts.cleverness = valueItem;
+				}
+				cout << "\n";
 				cout << "   Cleverness = " << player1.atts.cleverness << "\n";
 				reroll = true;
 				break;
 			case 3: // Dexterity
 				cout << "This value has to be a NUMBER.\nDexterity = ";
 				cin >> valueItem;
-				player1.atts.dexterity = valueItem;
+				cout << "\n";
+				if (valueItem < 0)
+				{
+					cout << "This value cannot be lower than 0";
+					player1.atts.dexterity = 0;
+				}
+				else
+				{
+					player1.atts.dexterity = valueItem;
+				}
+				cout << "\n";
 				cout << "   Dexterity = " << player1.atts.dexterity << "\n";
 				reroll = true;
 				break;
 			case 4: // Faith
 				cout << "This value has to be a NUMBER.\nFaith = ";
 				cin >> valueItem;
-				player1.atts.faith = valueItem;
+				cout << "\n";
+				if (valueItem < 0)
+				{
+					cout << "This value cannot be lower than 0";
+					player1.atts.faith = 0;
+				}
+				else
+				{
+					player1.atts.faith = valueItem;
+				}
+				cout << "\n";
 				cout << "   Faith = " << player1.atts.faith << "\n";
 				reroll = true;
 				break;
 			case 5: // Focus
 				cout << "This value has to be a NUMBER.\nFocus = ";
 				cin >> valueItem;
-				player1.atts.focus = valueItem;
+				cout << "\n";
+				if (valueItem < 0)
+				{
+					cout << "This value cannot be lower than 0";
+					player1.atts.focus = 0;
+				}
+				else
+				{
+					player1.atts.focus = valueItem;
+				}
+				cout << "\n";
 				cout << "   Focus = " << player1.atts.focus << "\n";
 				reroll = true;
 				break;
 			case 6: // Insperation
 				cout << "This value has to be a NUMBER.\nInsperation = ";
 				cin >> valueItem;
-				player1.atts.insperation = valueItem;
+				cout << "\n";
+				if (valueItem < 0)
+				{
+					cout << "This value cannot be lower than 0";
+					player1.atts.insperation = 0;
+				}
+				else
+				{
+					player1.atts.insperation = valueItem;
+				}
+				cout << "\n"
 				cout << "   Insperation = " << player1.atts.insperation << "\n";
 				reroll = true;
 				break;
 			case 7: // Copper
 				cout << "This value has to be a NUMBER.\nCopper = ";
 				cin >> valueItem;
-				player1.copper = valueItem;
+				cout << "\n";
+				if (valueItem < 0)
+				{
+					cout << "This value cannot be lower than 0";
+					player1.copper = 0;
+				}
+				else if (valueItem > 25000)
+				{
+					cout << "This value cannot be greater than 25000";
+					player1.copper = 25000;
+				}
+				else
+				{
+					player1.copper = valueItem;
+				}
+				cout << "\n";
 				cout << "   Copper = " << player1.copper << "\n";
 				reroll = true;
 				break;
 			case 8: // Hitpoints
 				cout << "This value has to be a NUMBER.\nHitpoints = ";
 				cin >> valueItem;
-				player1.hp = valueItem;
+				cout << "\n";
+				if (valueItem < 0)
+				{
+					cout << "This value cannot be lower than 0";
+					player1.hp = 0;
+				}
+				else if (valueItem > player1.hpMax)
+				{
+					cout << "This value cannot be lower than the Max Hitpoints value";
+					player1.hp = player1.hpMax;
+				}
+				else
+				{
+					player1.hp = valueItem;
+				}
+				cout << "\n"
 				cout << "   Hitpoints = " << player1.hp << "\n";
 				reroll = true;
 				break;
 			case 9: // Max Hitpoints
 				cout << "This value has to be a NUMBER.\nMax Hitpoints = ";
 				cin >> valueItem;
-				player1.hpMax = valueItem;
+				cout << "\n";
+				if (valueItem < 0)
+				{
+					cout << "This value cannot be lower than 0";
+					player1.hpMax = 0;
+				}
+				else if (valueItem < player1.hp)
+				{
+					cout << "This value cannot be lower than the Hitpoints value";
+					player1.hpMax = player1.hp;
+				}
+				else
+				{
+					player1.hpMax = valueItem;
+				}
+				cout << "\n";
 				cout << "   Max Hitpoints = " << player1.hpMax << "\n";
 				reroll = true;
 				break;
 			case 10: // Mana/Stamina
 				cout << "This value has to be a NUMBER.\nMana/Stamina = ";
 				cin >> valueItem;
-				player1.mp = valueItem;
+				cout << "\n";
+				if (valueItem < 0)
+				{
+					cout << "This value cannot be lower than 0";
+					player1.mp = 0;
+				}
+				else if (valueItem > player1.mpMax)
+				{
+					cout << "This value cannot be higher than the Max Mana/Stamina value";
+					player1.mp = player1.mpMax;
+				}
+				else
+				{
+					player1.mp = valueItem;
+				}
 				cout << "   Mana/Stamina = " << player1.mp << "\n";
 				reroll = true;
 				break;
 			case 11: // Max Mana/Stamina
 				cout << "This value has to be a NUMBER.\nMax Mana/Stamina = ";
 				cin >> valueItem;
-				player1.mpMax = valueItem;
+				cout << "\n";
+				if (valueItem < 0)
+				{
+					cout << "This value cannot be lower than 0";
+					player1.mpMax = 0;
+				}
+				else if (valueItem < player1.mp)
+				{
+					cout << "This value cannot be lower than the Mana/Stamina value";
+					player1.mpMax = player1.mp;
+				}
+				else
+				{
+					player1.mpMax = valueItem;
+				}
 				cout << "   Max Mana/Stamina = " << player1.mpMax << "\n";
 				reroll = true;
 				break;
 			case 12: // Masteries
 				cout << "This value has to be a NUMBER.\nMasteries = ";
 				cin >> valueItem;
-				player1.masteries = valueItem;
+				cout << "\n";
+				if (valueItem < 0)
+				{
+					cout << "This value cannot be lower than 0";
+					player1.masteries = 0;
+				}
+				else
+				{
+					player1.masteries = valueItem;
+				}
 				cout << "   Masteries = " << player1.masteries << "\n";
 				reroll = true;
 				break;
@@ -1215,6 +1357,10 @@ void loadSave()
 					case 15:
 						player1.location = ALCHIMEST;
 						break;
+					default:
+						cout << "This value doesn't match required values, setting to [1]";
+						player1.location = TOWN;
+						break;
 				}
 				cout << "\n";
 				cout << "   Location = ";
@@ -1268,6 +1414,9 @@ void loadSave()
 					case ALCHIMEST:
 						cout << "ALCHIMEST";
 						break;
+					default:
+						cout << "BROKEN";
+						break;
 				}
 				cout << "\n";
 				reroll = true;
@@ -1277,7 +1426,6 @@ void loadSave()
 				cin >> valueItem;
 				switch (valueItem)
 				{
-					default:
 					case 0:
 						player1.charClass = FIGHTER;
 						break;
@@ -1298,6 +1446,10 @@ void loadSave()
 						break;
 					case 6:
 						player1.charClass = MAGE;
+						break;
+					default:
+						cout << "This value doesn't match required values, setting to [0]";
+						player1.charClass = FIGHTER;
 						break;
 				}
 				cout << "\n";
@@ -1324,6 +1476,9 @@ void loadSave()
 						break;
 					case MAGE:
 						cout << "MAGE";
+						break;
+					default:
+						cout << "BROKEN";
 						break;
 				}
 				cout << "\n";
@@ -1359,6 +1514,10 @@ void loadSave()
 					case 7:
 						player1.charRace = UNDEAD;
 						break;
+					default:
+						cout << "This value doesn't match required values, setting to [0]";
+						player1.charRace = HUMAN;
+						break;
 				}
 				cout << "\n";
 				cout << "   Race = ";
@@ -1387,6 +1546,9 @@ void loadSave()
 						break;
 					case UNDEAD:
 						cout << "UNDEAD";
+						break;
+					default:
+						cout << "BROKEN";
 						break;
 				}
 				cout << "\n";
@@ -1422,6 +1584,10 @@ void loadSave()
 					case 7:
 						player1.weapon = VOIDEXCALIBUR;
 						break;
+					default:
+						cout << "This value doesn't match required values, setting to [3]";
+						player1.weapon = SWORD;
+						break;
 				}
 				cout << "\n";
 				cout << "   Weapon = ";
@@ -1451,6 +1617,9 @@ void loadSave()
 					case VOIDEXCALIBUR:
 						cout << "VOIDEXCALIBUR";
 						break;
+					default:
+						cout << "BROKEN";
+						default;
 				}
 				cout << "\n";
 				reroll = true;
@@ -1488,6 +1657,10 @@ void loadSave()
 					case 8:
 						player1.armor = IMPERVIUMPLATE;
 						break;
+					default:
+						cout << "This value doesn't match required values, setting to [2]";
+						player1.armor = LEATHER;
+						break;
 				}
 				cout << "\n";
 				cout << "   Armor = ";
@@ -1520,6 +1693,9 @@ void loadSave()
 					case IMPERVIUMPLATE:
 						cout << "IMPERVIUMPLATE";
 						break;
+					default:
+						cout << "BROKEN";
+						default;
 				}
 				cout << "\n";
 				reroll = true;
@@ -1530,6 +1706,7 @@ void loadSave()
 				switch (valueItem)
 				{
 					default:
+						cout << "This value doesn't match required values, setting to [false]";
 					case 0:
 						player1.cheated = false;
 						break;
@@ -1556,7 +1733,6 @@ void loadSave()
 				cin >> valueItem;
 				switch (valueItem)
 				{
-					default:
 					case 0:
 						player1.potion = NONE;
 						break;
@@ -1571,6 +1747,10 @@ void loadSave()
 						break;
 					case 4:
 						player1.potion = CHEAT;
+						break;
+					default:
+						cout << "This value doesn't match required values, setting to [0]";
+						player1.potion = NONE;
 						break;
 				}
 				cout << "\n";
@@ -1589,6 +1769,8 @@ void loadSave()
 					case CHEAT:
 						cout << "CHEAT";
 						break;
+					default:
+						cout << "BROKEN";
 				}
 				cout << "\n";
 				reroll = true;
@@ -1596,7 +1778,17 @@ void loadSave()
 			case 20:
 				cout << "This value has to be a NUMBER.\nBank Copper = ";
 				cin >> valueItem;
-				player1.bankCopper = valueItem;
+				cout << "\n";
+				if (valueItem < 0)
+				{
+					cout << "This value cannot be lower than 0";
+					player1.bankCopper = 0;
+				}
+				else
+				{
+					player1.bankCopper = valueItem;
+				}
+				cout << "\n";
 				cout << "   Bank Copper = " << player1.bankCopper << "\n";
 				reroll = true;
 				break;
@@ -1607,20 +1799,18 @@ void loadSave()
 				{
 					case 'y':
 					case 'Y':
+						cout << "\n\n";
+						writeToFile(&player1);
 						reroll = false;
 						break;
 					case 'n':
 					case 'N':
+						cout << "\n\n";
 						reroll = false;
 						break;
 					default:
 						reroll = true;
 						break;
-				}
-				cout << "\n\n";
-				if (saveItem == 'y' || saveItem == 'Y')
-				{
-					writeToFile(&player1);
 				}
 				break;
 		}
