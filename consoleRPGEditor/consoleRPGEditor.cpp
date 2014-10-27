@@ -704,33 +704,42 @@ void writeToFile(character *tmpChar)
 	// The temp Player save data;
 	playerSaveData playerSave;
 
-	// Initlize the player save.
-	playerSave.init(tmpChar);
-
-	if (playerSave.copper >= 25000 && !permDebug)
-	{
-		playerSave.cheated = true;
-	}
-
 	// Open the save file.
-	myfile.open("./save1.sav",'w');
+	myfile.open("./save1.sav", ios::binary);
 
-	// Write to the save file.
-	myfile.write((char *)&playerSave, sizeof(playerSave));
-
-	// If debug is enabled.
-	if (debug)
+	if (myfile.isopen())
 	{
-		debugSave(playerSave);
-	}
-	// Close the file after we are done with it.
-	myfile.close();
+		// Initlize the player save.
+		playerSave.init(tmpChar);
 
-	cout << "File saved.\n";
+		if (playerSave.copper >= 25000 && !permDebug)
+		{
+			playerSave.cheated = true;
+		}
+
+		if
+
+		// Write to the save file.
+		myfile.write((char *)&playerSave, sizeof(playerSave));
+
+		// If debug is enabled.
+		if (debug)
+		{
+			debugSave(playerSave);
+		}
+		// Close the file after we are done with it.
+		myfile.close();
+
+		cout << "File saved.\n";
+	}
+	else
+	{
+		cout << "Error saving player save file."
+	}
 }
 
 // Load from the save file.
-character getFromFile()
+character *getFromFile()
 {
 	// The character var for the loaded file.
 	playerSaveData playerSave;
@@ -739,61 +748,71 @@ character getFromFile()
 	character tmpChar;
 
 	// Load the save file.
-	ifstream myfile("./save1.sav", ios::binary);
+	ifstream myfile;
+	myfile.open("./save1.sav", ios::binary);
 
-	// Read the save file.
-	myfile.read((char *)&playerSave, sizeof(playerSave));
-
-	LOCATION location = playerSave.location;
-	int strength = playerSave.strength; // The strength stat of the class.
-	int faith = playerSave.faith; // The faith stat of the class.
-	int dexterity = playerSave.dexterity; // The dexterity stat of the class.
-	int insperation =  playerSave.insperation; // The insperation stat of the class.
-	int cleverness = playerSave.cleverness; // The cleverness stat of the class.
-	int focus = playerSave.focus; // The focus stat of the class.
-	int copper = playerSave.copper; // The amount of money the player has.
-	OCC charClass = playerSave.charClass; // The characters class.
-	RACE charRace = playerSave.charRace; // The characters race.
-	int hp = playerSave.hp; // The hitpoints for the character.
-	int hpMax = playerSave.hpMax; // The max hitpoints for the character.
-	int mp = playerSave.mp; // The mana or stamina for the character.
-	int mpMax = playerSave.mpMax; // The max mana or stamina for the character.
-	WEAPON weapon = playerSave.weapon; // The weapon the character has.
-	ARMOR armor = playerSave.armor; // The armor the character has.
-	int masteries = playerSave.masteries; // The skills level of the player.
-	bool cheated = playerSave.cheated; // The fact if the player cheated.
-	POTION potion = playerSave.potion; // The current potion of the player.
-	int bankCopper = playerSave.bankCopper; // The amount of copper the player has in the bank.
-
-	tmpChar.location  = location;
-	tmpChar.setAtts(strength, cleverness, dexterity, faith, focus, insperation);
-	tmpChar.charClass = charClass;
-	tmpChar.copper = copper;
-	tmpChar.hp = hp;
-	tmpChar.mp = mp;
-	tmpChar.masteries = masteries;
-	tmpChar.hpMax = hpMax;
-	tmpChar.mpMax = mpMax;
-	tmpChar.charRace = charRace;
-	tmpChar.weapon = weapon;
-	tmpChar.armor = armor;
-	tmpChar.cheated = cheated;
-	tmpChar.potion = potion;
-	tmpChar.bankCopper = bankCopper;
-
-	// Debug the class.
-	if (debug)
+	if (myfile.isopen())
 	{
-		debugSave(playerSave);
+		// Read the save file.
+		myfile.read((char *)&playerSave, sizeof(playerSave));
+
+		LOCATION location = playerSave.location;
+		int strength = playerSave.strength; // The strength stat of the class.
+		int faith = playerSave.faith; // The faith stat of the class.
+		int dexterity = playerSave.dexterity; // The dexterity stat of the class.
+		int insperation =  playerSave.insperation; // The insperation stat of the class.
+		int cleverness = playerSave.cleverness; // The cleverness stat of the class.
+		int focus = playerSave.focus; // The focus stat of the class.
+		int copper = playerSave.copper; // The amount of money the player has.
+		OCC charClass = playerSave.charClass; // The characters class.
+		RACE charRace = playerSave.charRace; // The characters race.
+		int hp = playerSave.hp; // The hitpoints for the character.
+		int hpMax = playerSave.hpMax; // The max hitpoints for the character.
+		int mp = playerSave.mp; // The mana or stamina for the character.
+		int mpMax = playerSave.mpMax; // The max mana or stamina for the character.
+		WEAPON weapon = playerSave.weapon; // The weapon the character has.
+		ARMOR armor = playerSave.armor; // The armor the character has.
+		int masteries = playerSave.masteries; // The skills level of the player.
+		bool cheated = playerSave.cheated; // The fact if the player cheated.
+		POTION potion = playerSave.potion; // The current potion of the player.
+		int bankCopper = playerSave.bankCopper; // The amount of copper the player has in the bank.
+
+		tmpChar.location  = location;
+		tmpChar.setAtts(strength, cleverness, dexterity, faith, focus, insperation);
+		tmpChar.charClass = charClass;
+		tmpChar.copper = copper;
+		tmpChar.hp = hp;
+		tmpChar.mp = mp;
+		tmpChar.masteries = masteries;
+		tmpChar.hpMax = hpMax;
+		tmpChar.mpMax = mpMax;
+		tmpChar.charRace = charRace;
+		tmpChar.weapon = weapon;
+		tmpChar.armor = armor;
+		tmpChar.cheated = cheated;
+		tmpChar.potion = potion;
+		tmpChar.bankCopper = bankCopper;
+
+		// Debug the class.
+		if (debug)
+		{
+			debugSave(playerSave);
+		}
+
+		// Close the file when we are done with it.
+		myfile.close();
+
+		cout << "Save loaded.\n";
+
+		// Return the character to return the char.
+		return tmpChar;
 	}
+	else
+	{
+		cout << "Error loading save file.";
 
-	// Close the file when we are done with it.
-	myfile.close();
-
-	cout << "Save loaded.\n";
-
-	// Return the character to return the char.
-	return tmpChar;
+		return NULL;
+	}
 }
 
 // Display the save table.
