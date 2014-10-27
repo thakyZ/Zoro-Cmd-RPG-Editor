@@ -1066,7 +1066,7 @@ void loadSave()
 		displaySave(player1);
 
 		cout << "\n";
-		cout << "Choose from the selected: [1] to [19]\n";
+		cout << "Choose from the selected: [1] to [21]\n";
 		cout << "Please input the correct input when editing a property.\n";
 		cout << "   If you don't it'll break the save...\n";
 
