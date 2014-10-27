@@ -18,7 +18,7 @@ enum RACE { HUMAN, ELF, DARKELF, ANGEL, MONGREL, SHAMANI, NIBELUNG, UNDEAD };
 enum OCC { FIGHTER, CLERIC, THEIF, BARD, ROUGE, TINKER, MAGE };
 
 // Loations types.
-enum LOCATION { QUIT, TOWN, FOREST, VIEWSTATS, MONSTER, SAVE, ARMORSMITH, BUYARMOR, SELLARMOR, TAVERN, WEAPONSMITH, BUYWEAPON, SELLWEAPON, CHAPEL, BANK, ALCHIMEST };
+enum LOCATION { QUIT, TOWN, FOREST, VIEWSTATS, MONSTER, SAVE, ARMORSMITH, BUYARMOR, SELLARMOR, TAVERN, WEAPONSMITH, BUYWEAPON, SELLWEAPON, CHAPEL, BANK, PUTMONEY, TAKEMONEY, ALCHIMEST, BUYPOTION, SELLPOTION };
 
 // Armors types.
 enum ARMOR { LOINCLOTH, CLOTH, LEATHER, CHAIN, PLATE, ANCIENTPLATE, MAGICPLATE, ARCHANEPLATE, IMPERVIUMPLATE };
@@ -1305,7 +1305,7 @@ void loadSave()
 				reroll = true;
 				break;
 			case 13: // Location
-				cout << "This value has to be a NUMBER.\nQUIT=0,TOWN=1,FOREST=2,VIEWSTATS=3,MONSTER=4,SAVE=5,\nARMORSMITH=6,BUYARMOR=7,SELLARMOR=8,TAVERN=9,\nWEAPONSMITH=10,BUYWEAPON=11,SELLWEAPON=12,CHAPEL=13,\nBANK=14,ALCHIMEST=15\nLocation = ";
+				cout << "This value has to be a NUMBER.\nQUIT=0,TOWN=1,FOREST=2,VIEWSTATS=3,MONSTER=4,SAVE=5,\nARMORSMITH=6,BUYARMOR=7,SELLARMOR=8,TAVERN=9,\nWEAPONSMITH=10,BUYWEAPON=11,SELLWEAPON=12,CHAPEL=13,\nBANK=14,PUTMONEY=15,TAKEMONEY=16,ALCHIMEST=17,\nBUYPOTION=18,SELLPOTION=19\nLocation = ";
 				cin >> valueItem;
 				switch (valueItem)
 				{
@@ -1355,7 +1355,19 @@ void loadSave()
 						player1.location = BANK;
 						break;
 					case 15:
+						player1.location = PUTMONEY;
+						break;
+					case 16:
+						player1.location = TAKEMONEY;
+						break;
+					case 17:
 						player1.location = ALCHIMEST;
+						break;
+					case 18:
+						player1.location = BUYPOTION;
+						break;
+					case 19:
+						player1.location = SELLPOTION;
 						break;
 					default:
 						cout << "This value doesn't match required values, setting to [1]";
@@ -1411,8 +1423,19 @@ void loadSave()
 					case BANK:
 						cout << "BANK";
 						break;
+					case PUTMONEY:
+						cout << "PUTMONEY";
+						break;
+					case TAKEMONEY:
+						cout << "TAKEMONEY";
 					case ALCHIMEST:
 						cout << "ALCHIMEST";
+						break;
+					case BUYPOTION:
+						cout << "BUYPOTION";
+						break;
+					case SELLPOTION:
+						cout << "SELLPOTION";
 						break;
 					default:
 						cout << "BROKEN";
