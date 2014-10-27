@@ -9,7 +9,6 @@
 using namespace std;
 
 bool debug = false; // To be used for debugging
-bool permDebug = false; // To turn on debugging if the player doesn't use it.
 
 // Race types.
 enum RACE { HUMAN, ELF, DARKELF, ANGEL, MONGREL, SHAMANI, NIBELUNG, UNDEAD };
@@ -1863,6 +1862,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	bool reroll = true; // The bool of if the user doesn't input the right input.
 	char menuItem; // The choice of which option to choose.
 
+	if (debug)
+	{
+		cout << "\n";
+		cout << "+=================================+\n";
+		cout << "   Debug -> ENABLED\n";
+		cout << "+=================================+\n";
+		cout << "\n";
+	}
+
 	cout << "Welcome to the consoleRPG Editor!\n";
 	cout << "\n";
 	cout << "NOTE: Please place this in the same folder as save1.sav!\n";
@@ -1872,7 +1880,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
 		reroll = false;
 
-		cout << "[L]oad 'save1.sav'\t[A]bout consoleRPGEditor\n[Q]uit";
+		cout << "[N]ew save\t\t[L]oad 'save1.sav'\n[A]bout consoleRPGEditor\t[Q]uit";
+
 		cout << "\n";
 
 		cin >> menuItem;
@@ -1881,6 +1890,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		switch (menuItem)
 		{
+			c
 			case 'l':
 			case 'L':
 				loadSave();
@@ -1896,25 +1906,9 @@ int _tmain(int argc, _TCHAR* argv[])
 				reroll = false;
 				break;
 			default:
-				if (menuItem != '6' && !permDebug)
-				{
-					cout << "Please choose a correct input.\n\n";
-					reroll = true;
-				}
+				cout << "Please choose a correct input.\n\n";
+				reroll = true;
 				break;
-		}
-
-		if (menuItem == '6' && permDebug)
-		{
-			debug = true;
-
-			cout << "\n";
-			cout << "+=================================+\n";
-			cout << "   Debug -> ENABLED\n";
-			cout << "+=================================+\n";
-			cout << "\n";
-
-			reroll = true;
 		}
 	}
 	return 0;
