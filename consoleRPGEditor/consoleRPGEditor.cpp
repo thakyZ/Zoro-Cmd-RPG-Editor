@@ -56,6 +56,7 @@ class character
 		bool cheated; // If the player cheated.
 		POTION potion; // The potion the player currently has.
 		int bankCopper; // The copper the player has in the bank.
+		bool null;
 
 		// Create the character sets.
 		character()
@@ -109,28 +110,28 @@ class playerSaveData
 		}
 
 		// Write the character to the player save data class.
-		void init(character *tmpChar)
+		void init(character tmpChar)
 		{
-			strength = tmpChar->atts.strength; // Set the strength.
-			faith = tmpChar->atts.faith; // Set the faith.
-			dexterity = tmpChar->atts.dexterity; // Set the dexterity.
-			insperation = tmpChar->atts.insperation; // Set the insperation.
-			cleverness = tmpChar->atts.cleverness; // Set the cleverness.
-			focus = tmpChar->atts.focus; // Set the focus.
-			copper = tmpChar->copper; // Set the copper.
-			charClass = tmpChar->charClass; // Set the class.
-			charRace = tmpChar->charRace; // Set the race.
-			hp = tmpChar->hp; // Set the hp.
-			hpMax = tmpChar->hpMax; // Set the max hp.
-			mp = tmpChar->mp; // Set the mana.
-			mpMax = tmpChar->mpMax; // Set the max mana.
-			location = tmpChar->location; // Set the location.
-			weapon = tmpChar->weapon; // Set the weapon.
-			armor = tmpChar->armor; // Set the armor.
-			masteries = tmpChar->masteries; // Set the masteries.
-			cheated = tmpChar->cheated; // Set if the player cheated.
-			potion = tmpChar->potion; // Set the player's current potion.
-			bankCopper = tmpChar->bankCopper; // Set the player's money in the bank.
+			strength = tmpChar.atts.strength; // Set the strength.
+			faith = tmpChar.atts.faith; // Set the faith.
+			dexterity = tmpChar.atts.dexterity; // Set the dexterity.
+			insperation = tmpChar.atts.insperation; // Set the insperation.
+			cleverness = tmpChar.atts.cleverness; // Set the cleverness.
+			focus = tmpChar.atts.focus; // Set the focus.
+			copper = tmpChar.copper; // Set the copper.
+			charClass = tmpChar.charClass; // Set the class.
+			charRace = tmpChar.charRace; // Set the race.
+			hp = tmpChar.hp; // Set the hp.
+			hpMax = tmpChar.hpMax; // Set the max hp.
+			mp = tmpChar.mp; // Set the mana.
+			mpMax = tmpChar.mpMax; // Set the max mana.
+			location = tmpChar.location; // Set the location.
+			weapon = tmpChar.weapon; // Set the weapon.
+			armor = tmpChar.armor; // Set the armor.
+			masteries = tmpChar.masteries; // Set the masteries.
+			cheated = tmpChar.cheated; // Set if the player cheated.
+			potion = tmpChar.potion; // Set the player's current potion.
+			bankCopper = tmpChar.bankCopper; // Set the player's money in the bank.
 		}
 };
 
@@ -695,7 +696,7 @@ void debugSave(playerSaveData tmpSaveFile)
 }
 
 // Write to the save file.
-void writeToFile(character *tmpChar)
+void writeToFile(character tmpChar)
 {
 	// Create the var for the save file.
 	ofstream myfile;
@@ -706,17 +707,15 @@ void writeToFile(character *tmpChar)
 	// Open the save file.
 	myfile.open("./save1.sav", ios::binary);
 
-	if (myfile.isopen())
+	if (myfile.is_open())
 	{
 		// Initlize the player save.
 		playerSave.init(tmpChar);
 
-		if (playerSave.copper >= 25000 && !permDebug)
+		if (playerSave.copper >= 25000 && !debug)
 		{
 			playerSave.cheated = true;
 		}
-
-		if
 
 		// Write to the save file.
 		myfile.write((char *)&playerSave, sizeof(playerSave));
@@ -733,12 +732,42 @@ void writeToFile(character *tmpChar)
 	}
 	else
 	{
-		cout << "Error saving player save file."
+		cout << "Error saving player save file.";
 	}
 }
 
+// Generate a new save file.
+character genNewFile()
+{
+	character tmpChar;
+
+	tmpChar.armor = LEATHER;
+	tmpChar.atts.cleverness = 10;
+	tmpChar.atts.dexterity = 10;
+	tmpChar.atts.faith = 10;
+	tmpChar.atts.focus = 10;
+	tmpChar.atts.insperation = 10;
+	tmpChar.atts.strength = 10;
+	tmpChar.bankCopper = 0;
+	tmpChar.charClass = FIGHTER;
+	tmpChar.charRace = HUMAN;
+	tmpChar.cheated = false;
+	tmpChar.copper = 100;
+	tmpChar.hp = 20;
+	tmpChar.hpMax = 20;
+	tmpChar.location = TOWN;
+	tmpChar.masteries = 1;
+	tmpChar.mp = 20;
+	tmpChar.mpMax = 20;
+	tmpChar.null = false;
+	tmpChar.potion = NONE;
+	tmpChar.weapon = SWORD;
+
+	return tmpChar;
+}
+
 // Load from the save file.
-character *getFromFile()
+character getFromFile()
 {
 	// The character var for the loaded file.
 	playerSaveData playerSave;
@@ -750,7 +779,7 @@ character *getFromFile()
 	ifstream myfile;
 	myfile.open("./save1.sav", ios::binary);
 
-	if (myfile.isopen())
+	if (myfile.is_open())
 	{
 		// Read the save file.
 		myfile.read((char *)&playerSave, sizeof(playerSave));
@@ -803,14 +832,18 @@ character *getFromFile()
 
 		cout << "Save loaded.\n";
 
+		tmpChar.null = false;
+
 		// Return the character to return the char.
-		return &tmpChar;
+		return tmpChar;
 	}
 	else
 	{
 		cout << "Error loading save file.";
 
-		return NULL;
+		tmpChar = genNewFile();
+
+		return tmpChar;
 	}
 }
 
@@ -1006,7 +1039,7 @@ void displaySave(character player1)
 			break;
 	}
 	cout << "\n";
-	cout << "| [--] | Armor-Class:       | " << displayArmorName(player1.armor, player1.charClass) << "\n";
+	cout << "| [--] |    Armor-Class:    | " << displayArmorName(player1.armor, player1.charClass) << "\n";
 	cout << "| [18] | Cheated:           | ";
 	switch (player1.cheated)
 	{
@@ -1017,6 +1050,7 @@ void displaySave(character player1)
 			cout << "FALSE";
 			break;
 	}
+	cout << "\n";
 	cout << "| [19] | Potion:            | ";
 	switch (player1.potion)
 	{
@@ -1038,16 +1072,25 @@ void displaySave(character player1)
 	}
 	cout << "\n";
 	cout << "| [20] | Bank Copper:       | " << player1.bankCopper << "\n";
-	cout << "\n";
 	cout << "+------+--------------------+------------------------\n";
 	cout << "| [21] | Done               |\n";
 	cout << "+------+--------------------+------------------------\n";
 }
 
 // Load the save.
-void loadSave()
+void loadSave(char thing)
 {
-	character player1 = &getFromFile(); // Start up the player editor.
+	character player1;
+
+	if (thing == 'l')
+	{
+		player1 = getFromFile(); // Start up the player editor.
+	}
+	else if (thing == 'n')
+	{
+		player1 = genNewFile();
+	}
+
 	int menuItem = 0; // The option to choose what to edit.
 	char saveItem; // To choose to save or not.
 	int valueItem = 0; // To change the value of an option.
@@ -1175,7 +1218,7 @@ void loadSave()
 				{
 					player1.atts.insperation = valueItem;
 				}
-				cout << "\n"
+				cout << "\n";
 				cout << "   Insperation = " << player1.atts.insperation << "\n";
 				reroll = true;
 				break;
@@ -1219,7 +1262,7 @@ void loadSave()
 				{
 					player1.hp = valueItem;
 				}
-				cout << "\n"
+				cout << "\n";
 				cout << "   Hitpoints = " << player1.hp << "\n";
 				reroll = true;
 				break;
@@ -1512,7 +1555,6 @@ void loadSave()
 				cin >> valueItem;
 				switch (valueItem)
 				{
-					default:
 					case 0:
 						player1.charRace = HUMAN;
 						break;
@@ -1582,7 +1624,6 @@ void loadSave()
 				cin >> valueItem;
 				switch (valueItem)
 				{
-					default:
 					case 0:
 						player1.weapon = FISTS;
 						break;
@@ -1642,7 +1683,7 @@ void loadSave()
 						break;
 					default:
 						cout << "BROKEN";
-						default;
+						break;
 				}
 				cout << "\n";
 				reroll = true;
@@ -1652,7 +1693,6 @@ void loadSave()
 				cin >> valueItem;
 				switch (valueItem)
 				{
-					default:
 					case 0:
 						player1.armor = LOINCLOTH;
 						break;
@@ -1718,7 +1758,7 @@ void loadSave()
 						break;
 					default:
 						cout << "BROKEN";
-						default;
+						break;
 				}
 				cout << "\n";
 				reroll = true;
@@ -1823,7 +1863,7 @@ void loadSave()
 					case 'y':
 					case 'Y':
 						cout << "\n\n";
-						writeToFile(&player1);
+						writeToFile(player1);
 						reroll = false;
 						break;
 					case 'n':
@@ -1890,10 +1930,13 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		switch (menuItem)
 		{
-			c
+			case 'n':
+			case 'N':
+				loadSave('n');
+				break;
 			case 'l':
 			case 'L':
-				loadSave();
+				loadSave('l');
 				reroll = true;
 				break;
 			case 'a':
