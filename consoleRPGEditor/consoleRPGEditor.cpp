@@ -39,6 +39,35 @@ struct ATTRIBUTES
 	unsigned int focus; // The focus stat of the class.
 };
 
+int clacLevel(int tmpExp)
+{
+
+	int tmpExpSub;
+
+	if (tmpExp <= 37 && tmpExp > 0)
+	{
+		tmpExpSub = (tmpExp + 7) / 2;
+	}
+	else if (tmpExp <= 112 && tmpExp > 37)
+	{
+		tmpExpSub = (tmpExp + 38) / 5;
+	}
+	else if (tmpExp > 112)
+	{
+		tmpExpSub = (tmpExp + 158) / 9;
+	}
+	else if (tmpExp <= 0)
+	{
+		tmpExpSub = 0;
+	}
+	else
+	{
+		tmpExpSub = 0;
+	}
+
+	return tmpExpSub;
+}
+
 // The class for the character.
 class character
 {
@@ -56,6 +85,8 @@ class character
 		bool cheated; // If the player cheated.
 		POTION potion; // The potion the player currently has.
 		int bankCopper; // The copper the player has in the bank.
+		int charExp;
+		int charLvl;
 		bool null;
 
 		// Create the character sets.
@@ -103,6 +134,8 @@ class playerSaveData
 		bool cheated; // If the player has cheated.
 		POTION potion; // The current potion the player has.
 		int bankCopper; // The amount of copper the player has in his bank.
+		int charExp;
+		int charLvl;
 
 		// Create the player save data class.
 		playerSaveData()
@@ -132,6 +165,8 @@ class playerSaveData
 			cheated = tmpChar.cheated; // Set if the player cheated.
 			potion = tmpChar.potion; // Set the player's current potion.
 			bankCopper = tmpChar.bankCopper; // Set the player's money in the bank.
+			charExp = tmpChar.charExp; // Set the player's exp total.
+			charLvl = tmpChar.charLvl; // Set the player's level temporarily.
 		}
 };
 
@@ -690,9 +725,47 @@ void debugSave(playerSaveData tmpSaveFile)
 			break;
 	}
 
+	cout << "Exp:             " << tmpSaveFile.charExp << "\n";
+
+	cout << "   Levels:       " << calcLevel(tmpSaveFile.charExp) << "\n";
+
+	cout << "Check Levels:    " << tmpSaveFile.charLvl << "\n";
+
 	cout << "+=================================+\n";
 	cout << "   Debug -> ENDED\n";
 	cout << "+=================================+\n";
+}
+
+// Generate a new save file.
+character genNewFile()
+{
+	character tmpChar;
+
+	tmpChar.armor = LEATHER;
+	tmpChar.atts.cleverness = 10;
+	tmpChar.atts.dexterity = 10;
+	tmpChar.atts.faith = 10;
+	tmpChar.atts.focus = 10;
+	tmpChar.atts.insperation = 10;
+	tmpChar.atts.strength = 10;
+	tmpChar.bankCopper = 0;
+	tmpChar.charClass = FIGHTER;
+	tmpChar.charRace = HUMAN;
+	tmpChar.cheated = false;
+	tmpChar.copper = 100;
+	tmpChar.hp = 20;
+	tmpChar.hpMax = 20;
+	tmpChar.location = TOWN;
+	tmpChar.masteries = 1;
+	tmpChar.mp = 20;
+	tmpChar.mpMax = 20;
+	tmpChar.null = false;
+	tmpChar.potion = NONE;
+	tmpChar.weapon = SWORD;
+	tmpChar.charExp = 0;
+	tmpChar.charLvl = 0;
+
+	return tmpChar;
 }
 
 // Write to the save file.
@@ -736,36 +809,6 @@ void writeToFile(character tmpChar)
 	}
 }
 
-// Generate a new save file.
-character genNewFile()
-{
-	character tmpChar;
-
-	tmpChar.armor = LEATHER;
-	tmpChar.atts.cleverness = 10;
-	tmpChar.atts.dexterity = 10;
-	tmpChar.atts.faith = 10;
-	tmpChar.atts.focus = 10;
-	tmpChar.atts.insperation = 10;
-	tmpChar.atts.strength = 10;
-	tmpChar.bankCopper = 0;
-	tmpChar.charClass = FIGHTER;
-	tmpChar.charRace = HUMAN;
-	tmpChar.cheated = false;
-	tmpChar.copper = 100;
-	tmpChar.hp = 20;
-	tmpChar.hpMax = 20;
-	tmpChar.location = TOWN;
-	tmpChar.masteries = 1;
-	tmpChar.mp = 20;
-	tmpChar.mpMax = 20;
-	tmpChar.null = false;
-	tmpChar.potion = NONE;
-	tmpChar.weapon = SWORD;
-
-	return tmpChar;
-}
-
 // Load from the save file.
 character getFromFile()
 {
@@ -804,6 +847,8 @@ character getFromFile()
 		bool cheated = playerSave.cheated; // The fact if the player cheated.
 		POTION potion = playerSave.potion; // The current potion of the player.
 		int bankCopper = playerSave.bankCopper; // The amount of copper the player has in the bank.
+		int charExp = playerSave.charExp; // The total amount of experiance the player has.
+		int charLvl = playerSave.charLvl; // The total amount of levels the player has for checks.
 
 		tmpChar.location  = location;
 		tmpChar.setAtts(strength, cleverness, dexterity, faith, focus, insperation);
@@ -820,6 +865,8 @@ character getFromFile()
 		tmpChar.cheated = cheated;
 		tmpChar.potion = potion;
 		tmpChar.bankCopper = bankCopper;
+		tmpChar.charExp = charExp;
+		tmpChar.charLvl = charLvl;
 
 		// Debug the class.
 		if (debug)
@@ -1072,8 +1119,11 @@ void displaySave(character player1)
 	}
 	cout << "\n";
 	cout << "| [20] | Bank Copper:       | " << player1.bankCopper << "\n";
+	cout << "| [21] | Exp:               | " << player1.charExp << "\n";
+	cout << "| [--] |    Level:          | " << calcLevel(player1.charExp) << "\n";
+	cout << "| [22] | TmpLevel:          | " << player1.charLvl << "\n";
 	cout << "+------+--------------------+------------------------\n";
-	cout << "| [21] | Done               |\n";
+	cout << "| [23] | Done               |\n";
 	cout << "+------+--------------------+------------------------\n";
 }
 
@@ -1855,7 +1905,46 @@ void loadSave(char thing)
 				cout << "   Bank Copper = " << player1.bankCopper << "\n";
 				reroll = true;
 				break;
-			case 21: // "Done."
+			case 21:
+				cout << "This value has to be a NUMBER.\nExp = ";
+				cin >> valueItem;
+				cout << "\n";
+				if (valueItem < 0)
+				{
+					cout << "This value cannot be lower than 0";
+					player1.charExp = 0;
+				}
+				else
+				{
+					player1.charExp = valueItem;
+				}
+				cout << "\n";
+				cout << "   Exp = " << player1.charExp << "\n";
+				reroll = true;
+				break;
+			case 22:
+				cout << "This value has to be a NUMBER.\nCheck Level = ";
+				cin >> valueItem;
+				cout << "\n";
+				if (valueItem < 0)
+				{
+					cout << "This value cannot be lower than 0";
+					player1.charLvl = 0;
+				}
+				else if (valueItem > 20)
+				{
+					cout << "This value cannot be higher than 20";
+					player1.charLvl = 20;
+				}
+				else
+				{
+					player1.charLvl = valueItem;
+				}
+				cout << "\n";
+				cout << "   Check Level = " << player1.charLvl << "\n";
+				reroll = true;
+				break;
+			case 23: // "Done."
 				cout << "Are you sure you want to save and exit? [Y]es [N]o\n";
 				cin >> saveItem;
 				switch (saveItem)
