@@ -39,33 +39,42 @@ struct ATTRIBUTES
 	unsigned int focus; // The focus stat of the class.
 };
 
-int clacLevel(int tmpExp)
+struct LEVELS
 {
+	int charLvl;
+	int charExp;
+};
 
-	int tmpExpSub;
+int calcLevel(int tmpExp, int check)
+{
+	int tmpExp1;
 
-	if (tmpExp <= 37 && tmpExp > 0)
+	if (tmpExp > 0)
 	{
-		tmpExpSub = (tmpExp + 7) / 2;
-	}
-	else if (tmpExp <= 112 && tmpExp > 37)
-	{
-		tmpExpSub = (tmpExp + 38) / 5;
-	}
-	else if (tmpExp > 112)
-	{
-		tmpExpSub = (tmpExp + 158) / 9;
+		tmpExp1 = (tmpExp + 158) / 9;
 	}
 	else if (tmpExp <= 0)
 	{
-		tmpExpSub = 0;
+		tmpExp1 = 1;
 	}
 	else
 	{
-		tmpExpSub = 0;
+		tmpExp1 = 1;
 	}
 
-	return tmpExpSub;
+	if (check == 0)
+	{
+		return tmpExp1;
+	}
+	else if (check == 1)
+	{
+		// Need to figure out what to do here... (I forgot :P)
+		return tmpExp1;
+	}
+	else
+	{
+		return tmpExp1;
+	}
 }
 
 // The class for the character.
@@ -73,6 +82,7 @@ class character
 {
 	public:
 		ATTRIBUTES atts; // The stats that the player has.
+		LEVELS levels;
 		int copper; // The amount of money the player has.
 		OCC charClass; // The characters class.
 		RACE charRace; // The characters race.
@@ -81,12 +91,9 @@ class character
 		LOCATION location; // The location the player is at.
 		WEAPON weapon; // The weapon the character has.
 		ARMOR armor; // The armor the character has.
-		int masteries; // The skills level of the player.
 		bool cheated; // If the player cheated.
 		POTION potion; // The potion the player currently has.
 		int bankCopper; // The copper the player has in the bank.
-		int charExp;
-		int charLvl;
 		bool null;
 
 		// Create the character sets.
@@ -107,6 +114,16 @@ class character
 			tmpAtts.focus = tmpFocus;
 
 			atts = tmpAtts;
+		}
+
+		void setLvl(int tmpExp, int tmpLvl)
+		{
+			LEVELS tmpLevels;
+
+			tmpLevels.charExp = tmpExp;
+			tmpLevels.charLvl = tmpLvl;
+
+			levels = tmpLevels;
 		}
 };
 
@@ -130,7 +147,6 @@ class playerSaveData
 		LOCATION location; // The location the player is at.
 		WEAPON weapon; // The weapon the character has.
 		ARMOR armor; // The armor the character has.
-		int masteries; // The skills level of the player.
 		bool cheated; // If the player has cheated.
 		POTION potion; // The current potion the player has.
 		int bankCopper; // The amount of copper the player has in his bank.
@@ -161,12 +177,11 @@ class playerSaveData
 			location = tmpChar.location; // Set the location.
 			weapon = tmpChar.weapon; // Set the weapon.
 			armor = tmpChar.armor; // Set the armor.
-			masteries = tmpChar.masteries; // Set the masteries.
 			cheated = tmpChar.cheated; // Set if the player cheated.
 			potion = tmpChar.potion; // Set the player's current potion.
 			bankCopper = tmpChar.bankCopper; // Set the player's money in the bank.
-			charExp = tmpChar.charExp; // Set the player's exp total.
-			charLvl = tmpChar.charLvl; // Set the player's level temporarily.
+			charExp = tmpChar.levels.charExp; // Set the player's exp total.
+			charLvl = tmpChar.levels.charLvl; // Set the player's level temporarily.
 		}
 };
 
@@ -692,8 +707,6 @@ void debugSave(playerSaveData tmpSaveFile)
 
 	cout << "Armor set name:   " << displayArmorName(tmpSaveFile.armor, tmpSaveFile.charClass) << "\n";
 
-	cout << "Masteries:        " << tmpSaveFile.masteries << "\n";
-
 	switch (tmpSaveFile.cheated)
 	{
 		case true:
@@ -756,14 +769,13 @@ character genNewFile()
 	tmpChar.hp = 20;
 	tmpChar.hpMax = 20;
 	tmpChar.location = TOWN;
-	tmpChar.masteries = 1;
 	tmpChar.mp = 20;
 	tmpChar.mpMax = 20;
 	tmpChar.null = false;
 	tmpChar.potion = NONE;
 	tmpChar.weapon = SWORD;
-	tmpChar.charExp = 0;
-	tmpChar.charLvl = 0;
+	tmpChar.levels.charExp = 0;
+	tmpChar.levels.charLvl = 0;
 
 	return tmpChar;
 }
@@ -843,7 +855,6 @@ character getFromFile()
 		int mpMax = playerSave.mpMax; // The max mana or stamina for the character.
 		WEAPON weapon = playerSave.weapon; // The weapon the character has.
 		ARMOR armor = playerSave.armor; // The armor the character has.
-		int masteries = playerSave.masteries; // The skills level of the player.
 		bool cheated = playerSave.cheated; // The fact if the player cheated.
 		POTION potion = playerSave.potion; // The current potion of the player.
 		int bankCopper = playerSave.bankCopper; // The amount of copper the player has in the bank.
@@ -856,7 +867,6 @@ character getFromFile()
 		tmpChar.copper = copper;
 		tmpChar.hp = hp;
 		tmpChar.mp = mp;
-		tmpChar.masteries = masteries;
 		tmpChar.hpMax = hpMax;
 		tmpChar.mpMax = mpMax;
 		tmpChar.charRace = charRace;
@@ -865,8 +875,8 @@ character getFromFile()
 		tmpChar.cheated = cheated;
 		tmpChar.potion = potion;
 		tmpChar.bankCopper = bankCopper;
-		tmpChar.charExp = charExp;
-		tmpChar.charLvl = charLvl;
+		tmpChar.levels.charExp = charExp;
+		tmpChar.levels.charLvl = charLvl;
 
 		// Debug the class.
 		if (debug)
@@ -915,8 +925,7 @@ void displaySave(character player1)
 	cout << "| [9]  | Max Hitpoints:     | " << player1.hpMax << "\n";
 	cout << "| [10] | Mana/Stamina:      | " << player1.mp << "\n";
 	cout << "| [11] | Max Mana/Stamina:  | " << player1.mpMax << "\n";
-	cout << "| [12] | Masteries:         | " << player1.masteries << "\n";
-	cout << "| [13] | Location:          | ";
+	cout << "| [12] | Location:          | ";
 	switch (player1.location)
 	{
 		case QUIT:
@@ -969,7 +978,7 @@ void displaySave(character player1)
 			break;
 	}
 	cout << "\n";
-	cout << "| [14] | Class:             | ";
+	cout << "| [13] | Class:             | ";
 	switch (player1.charClass)
 	{
 		case FIGHTER:
@@ -995,7 +1004,7 @@ void displaySave(character player1)
 			break;
 	}
 	cout << "\n";
-	cout << "| [15] | Race:              | ";
+	cout << "| [14] | Race:              | ";
 	switch (player1.charRace)
 	{
 		case HUMAN:
@@ -1024,7 +1033,7 @@ void displaySave(character player1)
 			break;
 	}
 	cout << "\n";
-	cout << "| [16] | Weapon:            | ";
+	cout << "| [15] | Weapon:            | ";
 	switch (player1.weapon)
 	{
 		case FISTS:
@@ -1054,7 +1063,7 @@ void displaySave(character player1)
 	}
 	cout << "\n";
 	cout << "| [--] |    Weapon-Class:   | " << displayWeaponName(player1.weapon, player1.charClass) << "\n";
-	cout << "| [17] | Armor:             | ";
+	cout << "| [16] | Armor:             | ";
 	switch (player1.armor)
 	{
 		case LOINCLOTH:
@@ -1087,7 +1096,7 @@ void displaySave(character player1)
 	}
 	cout << "\n";
 	cout << "| [--] |    Armor-Class:    | " << displayArmorName(player1.armor, player1.charClass) << "\n";
-	cout << "| [18] | Cheated:           | ";
+	cout << "| [17] | Cheated:           | ";
 	switch (player1.cheated)
 	{
 		case true:
@@ -1098,7 +1107,7 @@ void displaySave(character player1)
 			break;
 	}
 	cout << "\n";
-	cout << "| [19] | Potion:            | ";
+	cout << "| [18] | Potion:            | ";
 	switch (player1.potion)
 	{
 		case NONE:
@@ -1118,12 +1127,12 @@ void displaySave(character player1)
 			break;
 	}
 	cout << "\n";
-	cout << "| [20] | Bank Copper:       | " << player1.bankCopper << "\n";
-	cout << "| [21] | Exp:               | " << player1.charExp << "\n";
-	cout << "| [--] |    Level:          | " << calcLevel(player1.charExp) << "\n";
-	cout << "| [22] | TmpLevel:          | " << player1.charLvl << "\n";
+	cout << "| [19] | Bank Copper:       | " << player1.bankCopper << "\n";
+	cout << "| [20] | Exp:               | " << player1.levels.charExp << "\n";
+	cout << "| [--] |    Level:          | " << calcLevel(player1.levels.charExp, 0) << "\n";
+	cout << "| [21] | TmpLevel:          | " << player1.levels.charLvl << "\n";
 	cout << "+------+--------------------+------------------------\n";
-	cout << "| [23] | Done               |\n";
+	cout << "| [22] | Done               |\n";
 	cout << "+------+--------------------+------------------------\n";
 }
 
@@ -1380,24 +1389,8 @@ void loadSave(char thing)
 				cout << "   Max Mana/Stamina = " << player1.mpMax << "\n";
 				reroll = true;
 				break;
-			case 12: // Masteries
-				cout << "This value has to be a NUMBER.\nMasteries = ";
-				cin >> valueItem;
-				cout << "\n";
-				if (valueItem < 0)
-				{
-					cout << "This value cannot be lower than 0";
-					player1.masteries = 0;
-				}
-				else
-				{
-					player1.masteries = valueItem;
-				}
-				cout << "   Masteries = " << player1.masteries << "\n";
-				reroll = true;
-				break;
-			case 13: // Location
-				cout << "This value has to be a NUMBER.\nQUIT=0,TOWN=1,FOREST=2,VIEWSTATS=3,MONSTER=4,SAVE=5,\nARMORSMITH=6,BUYARMOR=7,SELLARMOR=8,TAVERN=9,\nWEAPONSMITH=10,BUYWEAPON=11,SELLWEAPON=12,CHAPEL=13,\nBANK=14,PUTMONEY=15,TAKEMONEY=16,ALCHIMEST=17,\nBUYPOTION=18,SELLPOTION=19\nLocation = ";
+			case 12: // Location
+				cout << "This value has to be a NUMBER.\nQUIT=0,TOWN=1,FOREST=2,VIEWSTATS=3,MONSTER=4,SAVE=5,\nARMORSMITH=6,BUYARMOR=7,SELLARMOR=8,TAVERN=9,\nWEAPONSMITH=10,BUYWEAPON=11,SELLWEAPON=12,CHAPEL=13,\nBANK=14,PUTMONEY=15,TAKEMONEY=16,ALCHIMEST=17,\nBUYPOTION=18,SELLPOTION=19,DEBUG=20\nLocation = ";
 				cin >> valueItem;
 				switch (valueItem)
 				{
@@ -1460,6 +1453,9 @@ void loadSave(char thing)
 						break;
 					case 19:
 						player1.location = SELLPOTION;
+						break;
+					case 20:
+						player1.location = DEBUG;
 						break;
 					default:
 						cout << "This value doesn't match required values, setting to [1]";
@@ -1530,6 +1526,9 @@ void loadSave(char thing)
 					case SELLPOTION:
 						cout << "SELLPOTION";
 						break;
+					case DEBUG:
+						cout << "DEBUG";
+						break;
 					default:
 						cout << "BROKEN";
 						break;
@@ -1537,7 +1536,7 @@ void loadSave(char thing)
 				cout << "\n";
 				reroll = true;
 				break;
-			case 14: // Class
+			case 13: // Class
 				cout << "This value has to be a NUMBER.\nFIGHTER=0,CLERIC=1,THEIF=2,BARD=3,ROUGE=4,TINKER=5,\nMAGE=6\nClass = ";
 				cin >> valueItem;
 				switch (valueItem)
@@ -1600,7 +1599,7 @@ void loadSave(char thing)
 				cout << "\n";
 				reroll = true;
 				break;
-			case 15: // Race
+			case 14: // Race
 				cout << "This value has to be a NUMBER.\nHUMAN=0,ELF=1,DARKELF=2,ANGEL=3,MONGREL=4,SHAMANI=5\nNIBELUNG=6,UNDEAD=7\nRace = ";
 				cin >> valueItem;
 				switch (valueItem)
@@ -1669,7 +1668,7 @@ void loadSave(char thing)
 				cout << "\n";
 				reroll = true;
 				break;
-			case 16: // Weapon
+			case 15: // Weapon
 				cout << "This value has to be a NUMBER.\nFISTS=0,DAGGER=1,STAFF=2,SWORD=3,ANCIENTBLADE=4,MAGICBLADE=5,\nARCHANEBLADE=6,VOIDEXCALIBUR=7\nWeapon = ";
 				cin >> valueItem;
 				switch (valueItem)
@@ -1738,7 +1737,7 @@ void loadSave(char thing)
 				cout << "\n";
 				reroll = true;
 				break;
-			case 17: // Armor
+			case 16: // Armor
 				cout << "This value has to be a NUMBER.\nLOINCLOTH=0,CLOTH=1,LEATHER=2,CHAIN=3,PLATE=4,\nANCIENTPLATE=5,MAGICPLATE=6,ARCHANEPLATE=7,\nIMPERVIUMPLATE=8\nWeapon = ";
 				cin >> valueItem;
 				switch (valueItem)
@@ -1813,7 +1812,7 @@ void loadSave(char thing)
 				cout << "\n";
 				reroll = true;
 				break;
-			case 18: // Cheated
+			case 17: // Cheated
 				cout << "This value has to be a NUMBER.\nFALSE=0,TRUE=1\nCheated = ";
 				cin >> valueItem;
 				switch (valueItem)
@@ -1841,7 +1840,7 @@ void loadSave(char thing)
 				cout << "\n";
 				reroll = true;
 				break;
-			case 19: // Potion
+			case 18: // Potion
 				cout << "This value has to be NUMBER.\nNONE=0,HEALTH=1,MANA=2,EXP=3,CHEAT=4\nPotion = ";
 				cin >> valueItem;
 				switch (valueItem)
@@ -1888,7 +1887,7 @@ void loadSave(char thing)
 				cout << "\n";
 				reroll = true;
 				break;
-			case 20:
+			case 19:
 				cout << "This value has to be a NUMBER.\nBank Copper = ";
 				cin >> valueItem;
 				cout << "\n";
@@ -1905,7 +1904,7 @@ void loadSave(char thing)
 				cout << "   Bank Copper = " << player1.bankCopper << "\n";
 				reroll = true;
 				break;
-			case 21:
+			case 20:
 				cout << "This value has to be a NUMBER.\nExp = ";
 				cin >> valueItem;
 				cout << "\n";
@@ -1922,7 +1921,7 @@ void loadSave(char thing)
 				cout << "   Exp = " << player1.charExp << "\n";
 				reroll = true;
 				break;
-			case 22:
+			case 21:
 				cout << "This value has to be a NUMBER.\nCheck Level = ";
 				cin >> valueItem;
 				cout << "\n";
@@ -1944,7 +1943,7 @@ void loadSave(char thing)
 				cout << "   Check Level = " << player1.charLvl << "\n";
 				reroll = true;
 				break;
-			case 23: // "Done."
+			case 22: // "Done."
 				cout << "Are you sure you want to save and exit? [Y]es [N]o\n";
 				cin >> saveItem;
 				switch (saveItem)
